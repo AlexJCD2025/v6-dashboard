@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>2026 上半年中国宏观经济深度报告 V2 | Super Joey</title>
+<meta name="description" content="全情景 · 多层级 · 可证伪的宏观投资框架 — 2026H1 中国宏观经济深度报告网页版">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#faf9f6;--surface:#fff;--surface-2:#f3f1ec;--line:#e5e1d8;--line-soft:#edeae2;
+  --ink:#26313c;--ink-2:#4b5563;--ink-3:#8a8f98;
+  --navy:#1f3864;--accent:#2456a6;--accent-soft:#eef3fb;
+  --bull:#1a7f37;--bull-bg:#eaf5ec;--bear:#c0392b;--bear-bg:#faeeec;
+  --amber:#9a6700;--amber-bg:#fbf4e4;--purple:#6d4fa1;--purple-bg:#f2eefa;
+  --serif:'Noto Serif SC','Songti SC',STSong,serif;
+  --sans:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#14171c;--surface:#1b1f26;--surface-2:#222731;--line:#333a46;--line-soft:#2a303b;
+    --ink:#dde2e9;--ink-2:#aab2be;--ink-3:#767e8a;
+    --navy:#243f6e;--accent:#7aa2e0;--accent-soft:#212c3f;
+    --bull:#5cb87a;--bull-bg:#1d2b22;--bear:#e08072;--bear-bg:#31211f;
+    --amber:#d4a94e;--amber-bg:#2c2618;--purple:#a98fd6;--purple-bg:#272134;
+  }
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+
+/* ---------- progress + layout ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--navy));width:0;z-index:300}
+.layout{display:grid;grid-template-columns:288px minmax(0,1fr);min-height:100vh}
+@media (max-width:1080px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- sidebar ---------- */
+#sidebar{border-right:1px solid var(--line-soft);background:var(--surface);position:sticky;top:0;height:100vh;overflow-y:auto;padding:26px 18px 40px;scrollbar-width:thin}
+#sidebar .brand{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--navy);line-height:1.5;margin-bottom:2px}
+@media (prefers-color-scheme:dark){#sidebar .brand{color:var(--accent)}}
+#sidebar .brand-sub{font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-bottom:18px}
+.toc a{display:block;text-decoration:none;color:var(--ink-2);font-size:13px;padding:4px 10px;border-left:2px solid transparent;border-radius:0 6px 6px 0;line-height:1.55}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.part{font-weight:600;color:var(--ink);margin-top:14px;font-size:13.5px}
+.toc a.sub{padding-left:24px;font-size:12.5px}
+.toc a.active{border-left-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+#tocToggle{display:none;position:fixed;bottom:22px;left:18px;z-index:250;background:var(--navy);color:#fff;border:none;border-radius:999px;padding:11px 18px;font-size:13px;font-family:var(--sans);box-shadow:0 4px 16px rgba(0,0,0,.25);cursor:pointer}
+@media (max-width:1080px){
+  #tocToggle{display:block}
+  #sidebar{position:fixed;left:0;top:0;width:min(320px,85vw);transform:translateX(-105%);transition:transform .25s ease;z-index:260;box-shadow:8px 0 30px rgba(0,0,0,.15)}
+  #sidebar.open{transform:translateX(0)}
+}
+#toTop{position:fixed;bottom:22px;right:18px;z-index:250;background:var(--surface);color:var(--ink-2);border:1px solid var(--line);border-radius:999px;width:42px;height:42px;font-size:17px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
+#toTop.show{opacity:1;pointer-events:auto}
+
+/* ---------- cover ---------- */
+.cover{background:linear-gradient(160deg,#1c3055 0%,#1f3864 55%,#2a4a7f 100%);color:#fff;padding:96px 32px 72px;text-align:center}
+.cover h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,46px);letter-spacing:.04em;line-height:1.35;margin-bottom:18px}
+.cover .subtitle{font-family:var(--serif);font-size:clamp(15px,2vw,19px);font-weight:500;color:#c6d4ea;letter-spacing:.35em;text-indent:.35em;margin-bottom:52px}
+.cover .meta{font-size:13px;color:#9fb2d1;line-height:2.15;font-family:var(--mono)}
+.cover .meta b{color:#d9e3f2;font-weight:500}
+.cover .disclaimer{max-width:640px;margin:46px auto 0;font-size:11.5px;color:#7e93b6;line-height:1.8;border-top:1px solid rgba(255,255,255,.14);padding-top:18px}
+.cover .badge-v{display:inline-block;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:12px;font-family:var(--mono);padding:3px 14px;margin-bottom:30px;color:#c6d4ea;letter-spacing:.12em}
+
+/* ---------- content ---------- */
+.content{max-width:820px;margin:0 auto;padding:24px 30px 90px;width:100%}
+@media (max-width:640px){.content{padding:18px 18px 80px}}
+
+.part-divider{margin:76px 0 40px;text-align:center}
+.part-divider:first-of-type{margin-top:48px}
+.part-divider .pd-kicker{font-size:12px;font-family:var(--mono);color:var(--ink-3);letter-spacing:.3em;margin-bottom:10px}
+.part-divider h2{font-family:var(--serif);font-weight:700;font-size:clamp(21px,3vw,27px);color:var(--navy);letter-spacing:.05em}
+@media (prefers-color-scheme:dark){.part-divider h2{color:var(--accent)}}
+.part-divider .pd-rule{width:56px;height:3px;background:var(--accent);margin:16px auto 0;border-radius:2px}
+
+h3.ch{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.5vw,23px);color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+h4.sec{font-family:var(--serif);font-weight:600;font-size:17.5px;color:var(--accent);margin:40px 0 12px}
+h5.sub{font-size:15.5px;font-weight:600;color:var(--ink);margin:26px 0 8px}
+.anchor{position:relative}
+.anchor a.pin{position:absolute;left:-1.15em;top:.15em;font-size:.8em;color:var(--ink-3);opacity:0;text-decoration:none}
+.anchor:hover a.pin{opacity:.7}
+
+p{margin:0 0 14px;text-align:justify}
+.lead-in{font-weight:600;color:var(--navy)}
+@media (prefers-color-scheme:dark){.lead-in{color:var(--accent)}}
+ul.plain{margin:0 0 16px 1.4em}
+ul.plain li{margin-bottom:8px;text-align:justify}
+.cite{font-size:12px;color:var(--ink-3);background:var(--surface-2);border-radius:5px;padding:1px 7px;margin:0 2px;white-space:nowrap;display:inline-block;line-height:1.7;vertical-align:baseline}
+a{color:var(--accent)}
+sup a{text-decoration:none;font-family:var(--mono);font-size:.75em}
+
+/* thesis / key statement */
+.thesis{background:var(--surface);border:1px solid var(--line-soft);border-left:4px solid var(--navy);border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0 24px;font-family:var(--serif);font-size:16.5px;line-height:2;font-weight:500}
+@media (prefers-color-scheme:dark){.thesis{border-left-color:var(--accent)}}
+
+/* fact / external / judgment blocks */
+.blk{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;padding:16px 20px 8px;margin:0 0 14px;position:relative}
+.blk .blk-label{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.18em;border-radius:5px;padding:2px 10px;margin-bottom:10px}
+.blk.fact{border-left:3px solid var(--ink-3)}
+.blk.fact .blk-label{background:var(--surface-2);color:var(--ink-2)}
+.blk.ext{border-left:3px solid var(--purple)}
+.blk.ext .blk-label{background:var(--purple-bg);color:var(--purple)}
+.blk.judge{border-left:3px solid var(--amber)}
+.blk.judge .blk-label{background:var(--amber-bg);color:var(--amber)}
+.blk p:last-child{margin-bottom:12px}
+
+/* callouts */
+.callout{border-radius:12px;padding:16px 20px 8px;margin:0 0 14px;border:1px solid var(--line-soft)}
+.callout .co-label{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.15em;border-radius:5px;padding:2px 10px;margin-bottom:10px}
+.callout p:last-child{margin-bottom:12px}
+.co-trigger{background:var(--bull-bg);border-color:transparent}
+.co-trigger .co-label{background:var(--bull);color:#fff}
+.co-falsify{background:var(--bear-bg);border-color:transparent}
+.co-falsify .co-label{background:var(--bear);color:#fff}
+.co-asset{background:var(--accent-soft);border-color:transparent}
+.co-asset .co-label{background:var(--accent);color:#fff}
+.co-note{background:var(--amber-bg);border-color:transparent}
+.co-note .co-label{background:var(--amber);color:#fff}
+.co-cc{background:var(--purple-bg);border-color:transparent}
+.co-cc .co-label{background:var(--purple);color:#fff}
+.callout ul{margin:0 0 12px 1.4em}
+.callout ul li{margin-bottom:6px;text-align:justify}
+
+/* tables */
+.tbl{overflow-x:auto;margin:16px 0 20px;border:1px solid var(--line-soft);border-radius:12px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+th{background:var(--surface-2);padding:10px 14px;text-align:left;color:var(--ink-2);font-size:12.5px;font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.7}
+tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono);white-space:nowrap;font-size:13px}
+td b.rowhead{color:var(--navy);font-weight:600}
+@media (prefers-color-scheme:dark){td b.rowhead{color:var(--accent)}}
+.ev{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;border-radius:5px;padding:1px 8px;white-space:nowrap}
+.ev.a{background:var(--bull-bg);color:var(--bull)}
+.ev.b{background:var(--accent-soft);color:var(--accent)}
+.ev.c{background:var(--amber-bg);color:var(--amber)}
+.trunc{color:var(--ink-3)}
+
+/* scenario cards */
+.scen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0 22px}
+.scen{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:18px 20px;border-top:4px solid var(--ink-3)}
+.scen.base{border-top-color:var(--accent)}
+.scen.bull{border-top-color:var(--bull)}
+.scen.bear{border-top-color:var(--bear)}
+.scen .s-name{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.scen .s-prob{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1.2}
+.scen.base .s-prob{color:var(--accent)}
+.scen.bull .s-prob{color:var(--bull)}
+.scen.bear .s-prob{color:var(--bear)}
+.scen .s-gdp{font-family:var(--mono);font-size:13px;color:var(--ink);margin:6px 0 8px}
+.scen .s-cond{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+
+/* indicator cards (ch 8) */
+.grp{font-size:14px;font-weight:600;color:var(--navy);margin:30px 0 10px;letter-spacing:.03em}
+@media (prefers-color-scheme:dark){.grp{color:var(--accent)}}
+.ind{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px}
+.ind .i-no{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:9px;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.ind.primary .i-no{color:#fff;background:var(--navy)}
+@media (prefers-color-scheme:dark){.ind.primary .i-no{background:var(--accent);color:#10141b}}
+.ind .i-title{font-weight:600;font-size:15px;margin-bottom:6px;line-height:1.6}
+.ind .i-body{font-size:13.8px;color:var(--ink-2);text-align:justify;line-height:1.8}
+
+/* footnotes + endmark + colophon */
+.footnotes{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;padding:18px 22px;margin:30px 0;font-size:13px;color:var(--ink-2)}
+.footnotes h6{font-size:12px;letter-spacing:.2em;color:var(--ink-3);margin-bottom:10px;font-weight:600}
+.footnotes p{margin-bottom:10px;text-align:justify}
+.footnotes .fn-no{font-family:var(--mono);color:var(--accent);margin-right:6px}
+.endmark{text-align:center;color:var(--ink-3);font-size:12px;font-family:var(--mono);margin:44px 0 8px;letter-spacing:.1em}
+.colophon{border-top:1px solid var(--line);margin-top:70px;padding:36px 0 0;text-align:center}
+.colophon .c-title{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--navy);margin-bottom:14px}
+@media (prefers-color-scheme:dark){.colophon .c-title{color:var(--accent)}}
+.colophon p{text-align:center;font-size:13px;color:var(--ink-2);margin-bottom:6px}
+.colophon .end{font-family:var(--mono);color:var(--ink-3);font-size:12px;letter-spacing:.35em;margin:26px 0 34px}
+.conv-note{background:var(--surface-2);border-radius:12px;padding:16px 20px;font-size:12px;color:var(--ink-3);line-height:1.9;text-align:left;max-width:680px;margin:0 auto 30px}
+.conv-note b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="tocToggle">☰ 目录</button>
+<button id="toTop" title="回到顶部">↑</button>
+
+<div class="layout">
+
+<nav id="sidebar">
+  <div class="brand">2026 上半年中国宏观经济深度报告</div>
+  <div class="brand-sub">V2 · 2026-07-23 · Super Joey</div>
+  <div class="toc">
+    <a href="#cover" class="part">封面</a>
+    <a href="#part1" class="part">第 1-2 章 执行摘要 · L0 中国宏观总量</a>
+    <a href="#ch1" class="sub">第1章 执行摘要</a>
+    <a href="#ch2" class="sub">第2章 L0 中国宏观总量</a>
+    <a href="#s2-1" class="sub">　2.1 总量仪表盘</a>
+    <a href="#s2-2" class="sub">　2.2 GDP</a>
+    <a href="#s2-3" class="sub">　2.3 景气度</a>
+    <a href="#s2-4" class="sub">　2.4 工业生产</a>
+    <a href="#s2-5" class="sub">　2.5 价格</a>
+    <a href="#s2-6" class="sub">　2.6 消费与收入</a>
+    <a href="#s2-7" class="sub">　2.7 外贸</a>
+    <a href="#s2-8" class="sub">　2.8 总量归纳</a>
+    <a href="#part2" class="part">第 3-4 章 L1 外部环境 · L2 中国内部结构</a>
+    <a href="#ch3" class="sub">第3章 L1：内部经济结构</a>
+    <a href="#s3-1" class="sub">　3.1 K 型分化</a>
+    <a href="#s3-2" class="sub">　3.2 软预算约束</a>
+    <a href="#s3-3" class="sub">　3.3 消费困局与 AI 的 J 曲线</a>
+    <a href="#s3-4" class="sub">　3.4 反内卷与地产终局</a>
+    <a href="#ch4" class="sub">第4章 L2：外部环境</a>
+    <a href="#s4-1" class="sub">　4.1 G2 竞争—合作光谱</a>
+    <a href="#s4-2" class="sub">　4.2 大宗商品、美元与 IMF 约束</a>
+    <a href="#s4-3" class="sub">　4.3 私人信贷与影子银行</a>
+    <a href="#part3" class="part">第 5 章 微观传导</a>
+    <a href="#s5-0" class="sub">　5.0 口径校准与核心结论</a>
+    <a href="#s5-1" class="sub">　5.1 宏观经济向行业传导</a>
+    <a href="#s5-2" class="sub">　5.2 就业层</a>
+    <a href="#s5-3" class="sub">　5.3 教育层</a>
+    <a href="#s5-4" class="sub">　5.4 房地产—消费—婚育—人口</a>
+    <a href="#s5-5" class="sub">　5.5 个人层：四类群体</a>
+    <a href="#s5-6" class="sub">　5.6 传导链总结</a>
+    <a href="#part4" class="part">第 6-8 章 L3 投资方向 · 三情景 · 反证条件</a>
+    <a href="#ch6" class="sub">第6章 L3 投资方向与配置建议</a>
+    <a href="#s6-1" class="sub">　6.1 L3 投资矩阵</a>
+    <a href="#s6-2" class="sub">　6.2 五条核心建议</a>
+    <a href="#s6-3" class="sub">　6.3 参考组合</a>
+    <a href="#ch7" class="sub">第7章 三情景推演</a>
+    <a href="#s7-1" class="sub">　7.1 基线情景（60%）</a>
+    <a href="#s7-2" class="sub">　7.2 乐观情景（25%）</a>
+    <a href="#s7-3" class="sub">　7.3 悲观情景（15%）</a>
+    <a href="#s7-4" class="sub">　7.4 概率调整：主流 vs CC 审计</a>
+    <a href="#ch8" class="sub">第8章 反证指标与跟踪清单</a>
+    <a href="#s8-1" class="sub">　8.1 五个一级反证指标</a>
+    <a href="#s8-2" class="sub">　8.2 二级跟踪指标</a>
+    <a href="#s8-3" class="sub">　8.3 执行频率与概率调整纪律</a>
+    <a href="#colophon" class="part">技术说明</a>
+  </div>
+</nav>
+
+<div class="main-col">
+
+<header class="cover" id="cover">
+  <div class="badge-v">V2 · 20260723</div>
+  <h1>2026 上半年中国宏观经济深度报告</h1>
+  <div class="subtitle">全情景 · 多层级 · 可证伪的宏观投资框架</div>
+  <div class="meta">
+    数据截止: <b>2026-07-23</b><br>
+    模型: <b>Codex (OpenAI gpt-5.6-sol) · medium reasoning</b><br>
+    反共识审计: <b>Claude Fable 5 Max (CC, 进行中)</b><br>
+    AI Agent: <b>Super Joey (Hermes Agent) · 2026-07-23</b>
+  </div>
+  <div class="disclaimer">免责声明: 本报告由 AI Agent 基于公开数据自动生成，仅作研究参考，不构成投资建议。所有数据可追溯到原始来源（国家统计局、Wind、Bloomberg 等）。</div>
+</header>
+
+<main class="content">
+
+<!-- ============================================================ -->
+<!-- 第 1-2 章 -->
+<!-- ============================================================ -->
+<div class="part-divider anchor" id="part1">
+  <div class="pd-kicker">PART Ⅰ</div>
+  <h2>第 1-2 章　执行摘要 · L0 中国宏观总量</h2>
+  <div class="pd-rule"></div>
+</div>
+
+<p><b>数据截止：</b>2026年7月23日<br>
+<b>证据强度：</b>A＝政府部门、官方统计及一手文件；B＝国际组织、行业协会及可交叉验证资料；C＝本报告测算、情景推演与资产配置判断。<sup><a href="#fn1" id="ref1">[1]</a></sup></p>
+
+<h3 class="ch anchor" id="ch1"><a class="pin" href="#ch1">#</a>第1章　执行摘要</h3>
+
+<h4 class="sec">一句话核心结论</h4>
+<div class="thesis">2026年上半年中国经济呈现“总量达标、二季度减速、生产与外需偏强、居民商品需求偏弱、工业价格先于消费价格回升”的非对称复苏；下半年政策重点不是守住4.5%的目标下沿，而是冲击5%的目标上沿——这就是本报告对“保5”的定义。</div>
+
+<div class="scen-grid">
+  <div class="scen base"><div class="s-name">基线情景</div><div class="s-prob">55%</div><div class="s-gdp">2026年GDP：4.6%—4.8%</div><div class="s-cond">出口保持韧性，财政温和加码，消费低位修复</div></div>
+  <div class="scen bull"><div class="s-name">乐观情景</div><div class="s-prob">25%</div><div class="s-gdp">2026年GDP：4.9%—5.1%</div><div class="s-cond">中美经贸关系稳定、补充财政工具落地、地产拖累收窄</div></div>
+  <div class="scen bear"><div class="s-name">悲观情景</div><div class="s-prob">20%</div><div class="s-gdp">2026年GDP：4.1%—4.4%</div><div class="s-cond">外需或能源冲击加剧，PPI向下游挤压利润，内需再<span class="trunc">…※</span></div></div>
+</div>
+
+<p>政府工作报告将2026年增长目标设为4.5%—5%并“争取更好结果”；本报告所称“保5”不是避免跌破5%，而是通过逆周期政策争取实现区间上沿。<span class="cite">国务院《政府工作报告》，A</span></p>
+
+<h4 class="sec">四条投资主线</h4>
+<div class="tbl"><table>
+<thead><tr><th>主线</th><th>核心逻辑</th><th>主要风险</th><th>证据</th></tr></thead>
+<tbody>
+<tr><td><b class="rowhead">黄金</b></td><td>地缘风险、能源冲击与全球货币信用分散化共同提高避<span class="trunc">…※</span></td><td>实际利率上升、中美风险溢价快速回落</td><td><span class="ev b">B</span></td></tr>
+<tr><td><b class="rowhead">资源</b></td><td>6月PPI同比升至4.1%，上游价格与名义收入弹<span class="trunc">…※</span></td><td>下游需求不足、成本传导受阻</td><td><span class="ev a">A</span>/<span class="ev b">B</span></td></tr>
+<tr><td><b class="rowhead">红利</b></td><td>二季度增长降速、内需不均衡，强化稳定现金流和低波<span class="trunc">…※</span></td><td>无风险利率上行、周期行情扩散</td><td><span class="ev b">B</span></td></tr>
+<tr><td><b class="rowhead">结构性科技</b></td><td>高技术制造、AI硬件、半导体、机器人及自主可控仍<span class="trunc">…※</span></td><td>估值透支、贸易限制、重复投资</td><td><span class="ev a">A</span>/<span class="ev b">B</span></td></tr>
+</tbody>
+</table></div>
+<p style="font-size:12px;color:var(--ink-3)">※ 原 PDF 表格单元格文字溢出截断，网页按可辨识内容如实保留，截断处以 …※ 标注（下同）。</p>
+
+<h3 class="ch anchor" id="ch2"><a class="pin" href="#ch2">#</a>第2章　L0 中国宏观总量</h3>
+
+<h4 class="sec anchor" id="s2-1"><a class="pin" href="#s2-1">#</a>2.1　总量仪表盘：增长达标，但结构并不均衡</h4>
+<div class="tbl"><table>
+<thead><tr><th>指标</th><th>2026 H1／6月</th><th>边际信号</th><th>来源与评级</th></tr></thead>
+<tbody>
+<tr><td><b class="rowhead">GDP</b></td><td class="num">H1同比+4.7%，69.57万亿元；Q1 +5<span class="trunc">…※</span></td><td>二季度明显降速</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">制造业PMI</b></td><td class="num">6月50.3%，Q1参照值50.7%</td><td>重返扩张区间，但低于一季度</td><td><span class="cite">国家统计局及本报告确认口径</span> <span class="ev a">A</span>/<span class="ev b">B</span></td></tr>
+<tr><td><b class="rowhead">非制造业PMI</b></td><td class="num">6月50.5%</td><td>服务活动保持扩张</td><td><span class="cite">本报告确认口径</span> <span class="ev b">B</span><sup><a href="#fn2">[2]</a></sup></td></tr>
+<tr><td><b class="rowhead">CPI／核心CPI</b></td><td class="num">6月均同比+1.0%</td><td>终端通胀温和</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">PPI</b></td><td class="num">6月同比+4.1%</td><td>连续4个月回升，2022年7月以来最高</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">工业增加值</b></td><td class="num">H1 +5.4%，6月+5.3%</td><td>生产快于GDP</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">社会消费</b></td><td class="num">新口径+2.7%；传统口径+1.3%</td><td>服务强于商品</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">货物进出口</b></td><td class="num">H1 +16.9%</td><td>外需和进口共同扩张</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">居民可支配收入</b></td><td class="num">名义+5.2%</td><td>快于GDP，财产收入偏弱</td><td><span class="cite">国家统计局</span> <span class="ev a">A</span></td></tr>
+<tr><td><b class="rowhead">国内乘用车销售</b></td><td class="num">6月连续第9个月同比下滑</td><td>耐用品需求仍弱</td><td><span class="cite">乘联分会</span> <span class="ev b">B</span></td></tr>
+</tbody>
+</table></div>
+
+<h4 class="sec anchor" id="s2-2"><a class="pin" href="#s2-2">#</a>2.2　GDP：上半年完成度尚可，二季度减速决定下半年政策斜率</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>2026年上半年国内生产总值为695,704亿元，即约69.57万亿元，同比增长4.7%；其中一季度同比增长5.0%，二季度增长4.3%，二季度较一季度回落0.7个百分点。经季节调整后，一、二季度环比分别增长1.3%和0.9%。<span class="cite">国家统计局，A</span></p>
+<p>从产业结构看，上半年第一、第二、第三产业增加值分别增长3.7%、3.9%和5.2%；服务业增加值达到41.37万亿元，占GDP比重约59.5%，第三产业仍是主要增长贡献来源。<span class="cite">国家统计局，A</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>IMF在2026年7月更新中预计中国全年增长4.6%，较此前预测上调0.2个百分点，判断出口与科技投资仍具韧性，但全球能源冲击和内需不足构成约束。<span class="cite">IMF，B</span></p>
+<p>世界银行的判断更谨慎，预计2026年中国增长4.4%，认为高技术投资和出口能够部分抵消房地产调整与消费偏弱，但现有政策结构仍较偏向投资，供需再平衡进程较慢。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>二季度减速并非经济全面失速，而是三种力量叠加：一是部分前置出口和投资效应消退；二是地产链、传统商品消费及汽车需求仍然偏弱；三是能源和原材料价格上涨压缩部分中下游行业的实际购买力。</p>
+<p>按上下半年规模近似处理，全年实现4.5%需要下半年增速大致保持在4.3%左右；实现4.7%需要下半年接近4.7%；冲击5%则需要下半年增速大致升至5.3%左右。实际结果还会受到季度现价权重和基数差异影响，因此上述数字属于方向性测算。<span class="cite">本报告测算，C</span></p>
+<p>这意味着“保5”的政策含义是主动冲击目标区间上沿，而不是被动防守下沿。若三季度内需与地产未能明显改善，增量财政工具、消费支持和政策性金融投放的必要性将上升；若出口继续高速增长，政策则更可能采取定向而非全面刺激。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-3"><a class="pin" href="#s2-3">#</a>2.3　景气度：6月重返扩张，但企业感受仍呈明显分层</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>6月制造业PMI为50.3%，较5月上升0.3个百分点，重新进入扩张区间；相较本报告采用的一季度参照值50.7%仍低0.4个百分点。<span class="cite">国家统计局及本报告确认口径，A/B</span></p>
+<p>制造业生产指数和新订单指数分别为51.4%和51.2%，均位于扩张区间；新出口订单、从业人员和在手订单指数仍低于50%。高技术制造业PMI为53.5%，装备制造业PMI为52.5%，而高耗能行业PMI仅为47.1%。<span class="cite">国家统计局，A</span></p>
+<p>本报告采用的6月非制造业PMI为50.5%，指向服务和建筑活动总体维持扩张，但扩张强度有限。<span class="cite">本报告确认口径，B</span><sup><a href="#fn2">[2]</a></sup></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>国家统计局将6月PMI回升概括为经济景气水平有所改善，同时指出高技术和装备制造业的引领作用增强。<span class="cite">国家统计局，A</span></p>
+<p>世界银行认为，2026年初增长韧性主要来自高技术投资和出口，而整体国内需求依然偏弱。这与“高技术PMI显著高于总体、就业和在手订单仍处收缩区间”的组合相互印证。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>50.3%的制造业PMI更接近“弱扩张”，不能直接等同于需求全面复苏。当前景气改善主要由三条产业链贡献：AI及电子硬件、装备制造、出口相关制造；地产链、高耗能行业和就业密集型传统制造仍较弱。</p>
+<p>生产指数高于新订单指数，而新出口订单和在手订单低于临界点，意味着企业生产恢复的一部分可能来自前期订单、政策项目和补库存。若三季度终端订单未同步改善，库存和价格压力可能重新上升。因此，PMI重返扩张的证据强度为A，但其对持续复苏的预测能力仅评为B。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-4"><a class="pin" href="#s2-4">#</a>2.4　工业生产：数量扩张仍强，科技制造成为主要支柱</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>上半年规模以上工业增加值同比增长5.4%，高于同期GDP增速0.7个百分点；6月增长5.3%，较5月加快0.8个百分点，环比增长0.76%。<span class="cite">国家统计局，A</span></p>
+<p>上半年制造业增加值增长5.6%，高技术制造业增长13.3%；6月计算机、通信和其他电子设备制造业增长15.7%，铁路、船舶、航空航天和其他运输设备制造业增长18.2%，专用设备制造业增长10.0%。<span class="cite">国家统计局，A</span></p>
+<p>另一方面，6月汽车产量同比下降0.2%，原油加工量下降17.7%，水泥产量下降5.6%，反映传统周期行业并未与科技制造同步扩张。<span class="cite">国家统计局，A</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>世界银行认为，AI相关内外需求推动了高技术投资，科技密集型产品出口也成为外贸增长的重要来源；但过度依赖投资和生产端支持，可能延缓供需缺口的收敛。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>工业增加值快于GDP，说明增长引擎仍偏生产端。与过去地产、钢铁、水泥主导的工业周期不同，本轮增量集中在电子信息、AI基础设施、高端装备和交通设备，产业结构的含金量有所提高。</p>
+<p>但“结构升级”不能自动消除总需求不足。如果高技术产品主要依靠出口吸收，外部贸易壁垒将成为产能利用率和利润率的关键变量；如果国内资本开支持续快于最终需求，则部分行业可能出现价格竞争和重复建设。结构性科技具备相对景气优势，但投资筛选必须从“政策标签”进一步下沉到订单、现金流、研发转化率和全球市场份额。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-5"><a class="pin" href="#s2-5">#</a>2.5　价格：PPI先行上升，CPI仍显示终端需求温和</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>6月CPI同比上涨1.0%，扣除食品和能源后的核心CPI同样上涨1.0%；CPI环比下降0.3%。其中猪肉价格同比下降15.9%，交通通信价格上涨4.1%，价格结构受食品供给与能源成本共同影响。<span class="cite">国家统计局，A</span></p>
+<p>6月PPI同比上涨4.1%，连续第4个月回升，为2022年7月以来最高水平；环比则下降0.3%。上半年PPI累计同比上涨1.5%，二季度同比上涨3.6%，为2022年第四季度以来季度涨幅首次转正。<span class="cite">国家统计局，A</span></p>
+<p>从结构看，6月生产资料价格同比上涨5.5%，采掘工业和原材料工业分别上涨16.5%和8.6%；生活资料价格仍下降0.9%。工业生产者购进价格同比上涨6.4%，高于出厂价格涨幅。<span class="cite">国家统计局，A</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>国家统计局认为，3月以来PPI回升主要受到国际大宗商品价格上涨传导和国内部分行业需求改善影响。<span class="cite">国家统计局，A</span></p>
+<p>世界银行预计2026年中国全年CPI约上涨1.1%，认为能源和化肥价格的传导将推升通胀，但内需偏弱会限制终端价格上行幅度。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>PPI与CPI之间3.1个百分点的裂口表明，本轮价格回升首先发生在上游，而非由居民消费需求推动。购进价格又高于出厂价格，意味着中游制造企业面临成本上升但终端提价能力有限的压力。</p>
+<p>因此，PPI回升对上市公司的影响并非普遍利好：资源开采、部分材料和拥有定价权的资本品企业受益；竞争激烈、下游需求偏弱且原料占比较高的制造企业利润率可能受损。价格结构支持资源板块，但不构成全面周期牛市的充分条件。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-6"><a class="pin" href="#s2-6">#</a>2.6　消费与收入：双口径揭示“服务修复、商品承压”</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>按2026年扩展观察口径，上半年社会消费商品和服务零售总额同比增长2.7%；按传统社会消费品零售总额口径，上半年增长1.3%至248,722亿元。<span class="cite">国家统计局，A</span></p>
+<p>传统口径中，上半年商品零售额增长1.1%，餐饮收入增长2.8%；同期服务零售额增长5.3%。6月传统社零同比增长1.0%，其中除汽车以外的消费品零售额增长3.0%。<span class="cite">国家统计局，A</span></p>
+<p>上半年全国居民人均可支配收入为22,981元，名义增长5.2%，实际增长4.2%；工资性收入增长5.3%，经营净收入增长6.5%，转移净收入增长5.8%，财产净收入仅增长1.1%。<span class="cite">国家统计局，A</span></p>
+<p>6月国内乘用车销售连续第9个月同比下降。乘联分会口径显示，6月国内乘用车零售约160万辆，同比下降约23%，但新能源渗透率升至62.8%。<span class="cite">中国汽车流通协会乘联分会，B</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>国家统计局强调，居民消费正从商品消费为主转向商品与服务消费并重，服务零售增速持续高于商品零售。<span class="cite">国家统计局，A</span></p>
+<p>世界银行则认为，住房需求下降、资产负债表压力和就业不确定性仍使居民消费保持谨慎，现有育儿与养老转移项目对总消费的拉动相对有限。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>2.7%与1.3%不是相互矛盾的两个社零数字，而是统计边界不同：前者将商品和服务销售合并观察，后者主要覆盖实物商品与餐饮收入。服务零售增长5.3%，显著快于商品零售1.1%，使新口径增速高于传统口径。<sup><a href="#fn3">[3]</a></sup></p>
+<p>收入增速快于传统社零，但未转化为同等强度的商品消费，主要存在四种解释：居民增加储蓄；消费转向旅游、文娱、通信等服务；住房和耐用品需求下降；收入分布与平均数之间存在差异。财产净收入仅增长1.1%，也表明房地产和金融资产回报对消费意愿的支持偏弱。</p>
+<p>汽车连续9个月下滑是最清晰的耐用品压力指标。不过，行业同时出现“总量下降、新能源渗透率上升、出口增长”的结构分化，意味着汽车产业并非整体衰退，而是国内需求、燃油车产能和价格体系承压。政策若再次支持汽车消费，更可能侧重更新需求、低线市场和充换电基础设施，而非单纯扩大生产补贴。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-7"><a class="pin" href="#s2-7">#</a>2.7　外贸：增长最强的总量变量，也是下半年最大外生变量</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>上半年货物进出口总额达到254,686亿元，同比增长16.9%；其中出口147,314亿元，增长13.4%，进口107,372亿元，增长22.1%。6月进出口总额增长24.2%，出口和进口分别增长20.8%和29.4%。<span class="cite">国家统计局，A</span></p>
+<p>上半年民营企业进出口增长17.0%，占进出口总额57.0%；机电产品出口增长20.1%，占出口总额63.5%。<span class="cite">国家统计局，A</span></p>
+<p>2026年5月13日至15日举行中美元首会晤，双方就保持经贸关系稳定、拓展务实合作以及妥善处理彼此关切达成共识。<span class="cite">外交部，A</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>世界银行认为，AI相关全球需求推动中国高技术出口，出口在上半年有效对冲了国内需求不足；但能源供应扰动、全球增长放缓和贸易限制仍可能使下半年出口增速回落。<span class="cite">世界银行，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>16.9%的进出口增速是上半年最强的总量信号，其驱动并非单纯“低价商品抢出口”，而是机电、高技术设备、汽车及相关产业链出口与能源、原材料、科技中间品进口共同扩张。进口增速高于出口，也说明AI资本开支和工业生产对海外资源及核心零部件存在较强需求。</p>
+<p>中美元首会晤降低了短期尾部风险，但没有消除科技、产业补贴、市场准入和供应链安全等长期分歧。基线情景下，外贸仍将贡献正增长，但增速较上半年回落；乐观情景需要经贸共识转化为具体关税削减和市场准入安排；悲观情景则对应能源运输再受扰动或主要经济体贸易限制升级。</p>
+</div>
+
+<h4 class="sec anchor" id="s2-8"><a class="pin" href="#s2-8">#</a>2.8　总量归纳：从“真实增长”转向“名义修复”，关键仍在需求传导</h4>
+<div class="blk fact"><div class="blk-label">事实</div>
+<p>上半年GDP增长4.7%、工业增加值增长5.4%、进出口增长16.9%，而传统社零仅增长1.3%；6月PPI上涨4.1%，CPI和核心CPI均上涨1.0%。这一组数据共同指向“生产和外需强、商品内需弱、上游价格强于终端价格”的结构。<span class="cite">国家统计局，A</span></p>
+</div>
+<div class="blk ext"><div class="blk-label">外部观点</div>
+<p>官方判断是经济运行仍处合理区间，但“国内供强需弱矛盾突出”；世界银行和IMF同样将内需不足、房地产调整与外部不确定性列为主要风险。<span class="cite">国家统计局，A</span> <span class="cite">世界银行，B</span> <span class="cite">IMF，B</span></p>
+</div>
+<div class="blk judge"><div class="blk-label">本报告判断</div>
+<p>下半年宏观主线不是简单判断经济“复苏或衰退”，而是观察三次传导能否完成：</p>
+<ul class="plain">
+<li>出口与科技生产能否传导至企业利润和就业。</li>
+<li>PPI回升能否从上游扩散至中游，而不演变为利润挤压。</li>
+<li>居民收入能否转化为商品及耐用品消费，而不只是服务消费和预防性储蓄。</li>
+</ul>
+<p>若三条传导至少实现两条，全年增长接近4.8%并冲击5%具备基础；若只有出口和上游价格保持强势，经济将继续呈现总量尚稳但微观体感偏弱的状态；若外需同步转弱，则财政政策需要承担更强的稳定总需求功能。</p>
+<p>资产层面，由此形成明确排序：黄金承担外部冲击对冲；资源受益于上游价格与名义增长修复；红利资产应对增长和政策路径的不确定性；结构性科技捕捉生产率、国产替代及全球AI资本开支。四条主线不是静态等权组合，而是对“增长、通胀、政策、地缘”四类风险的分工配置。</p>
+</div>
+
+<div class="footnotes" id="footnotes-1">
+<h6>脚注</h6>
+<p id="fn1"><span class="fn-no">[1]</span>A级证据强调统计和事件真实性，不代表指标具有完全预测能力；B级证据可能受机构模型、行业样本或统计定义影响；C级结论均为本报告推演，不构成确定性预测。 <a href="#ref1">↩</a></p>
+<p id="fn2"><span class="fn-no">[2]</span>按本报告已确认数据口径，6月非制造业PMI采用50.5%；国家统计局公开发布页面显示非制造业商务活动指数为50.2%。为保持既定报告口径，正文保留50.5%，但将证据评级降为B。制造业PMI 50.3%及“重返扩张区间”与官方发布一致。</p>
+<p id="fn3"><span class="fn-no">[3]</span>“社会消费商品和服务零售总额”属于扩展消费观察口径；传统“社会消费品零售总额”覆盖商品零售和餐饮收入。两者不能直接作历史同比替换，也不能在缺少完整权重时用商品、餐饮和服务零售增速机械加权反推。</p>
+</div>
+
+<div class="endmark">— 第 1-2 章完结 · 总字数：约5,650字（含表格与脚注） —</div>
+
+<!-- ============================================================ -->
+<!-- 第 3-4 章 -->
+<!-- ============================================================ -->
+<div class="part-divider anchor" id="part2">
+  <div class="pd-kicker">PART Ⅱ</div>
+  <h2>第 3-4 章　L1 外部环境 · L2 中国内部结构</h2>
+  <div class="pd-rule"></div>
+</div>
+
+<div class="callout co-note"><div class="co-label">数据口径校准</div>
+<p>本文数据截至2026年7月23日。经核验，委托资料中的“社零+2.7%”实际是“社会消费商品和服务零售总额”增速；传统社会消费品零售总额为+1.3%，其中商品零售+1.1%、服务零售额+5.3%。2026年6月制造业PMI为50.3%，并非49.5%。此外，公开数据不支持“H1人民币对美元均值约7.25”和“2026年7月G2峰会”两项表述，本文不予沿用。美国对华平均有效关税率2025年为约30.6%，而非约28%。相关分析均采用核实后的口径。</p>
+</div>
+
+<h3 class="ch anchor" id="ch3"><a class="pin" href="#ch3">#</a>第3章　L1：内部经济结构</h3>
+
+<p>2026年上半年，中国经济的核心特征不是总量失速，而是总量增长与微观体感之间的裂口继续扩大。国内生产总值达到69.57万亿元，按不变价格计算同比增长4.7%；季度增速由一季度的5.0%降至二季度的4.3%。同期规模以上工业增加值增长5.4%，明显快于社会消费品零售总额的1.3%；二季度工业产能利用率则降至73.0%，同比下降1.0个百分点。这组组合意味着，生产扩张、出口扩张与最终需求之间尚未形成完整闭环。<span class="cite">国家统计局：上半年经济数据</span> <span class="cite">国家统计局：工业产能利用率</span></p>
+
+<h4 class="sec anchor" id="s3-1"><a class="pin" href="#s3-1">#</a>3.1　K 型分化：增长的上半支与体感的下半支</h4>
+<p>“达哥框架”下的K型分化，不只是行业景气不同，而是收入、资产、消费、融资和就业机会在不同群体之间形成相互强化的两条路径。上半支由出口、高技术制造、信息服务、金融服务以及拥有资产和稀缺技能的群体构成；下半支则集中于传统地产链、一般制造、线下可选消费、中低收入劳动者及对地方财政依赖较高的就业部门。宏观总量仍在增长，但增长的就业密度、工资传导强度和居民获得感弱于过去。</p>
+<p>最直接的证据是GDP、工业与消费之间的错位。上半年GDP同比增长4.7%，规模以上工业增加值增长5.4%，高技术制造业增加值增长13.3%；但社会消费品零售总额仅增长1.3%，商品零售额仅增长1.1%。6月单月社零同比增长1.0%，限额以上单位消费品零售额下降2.0%。汽车类零售额上半年下降12.6%，6月单月下降16.1%，已经成为商品消费的主要拖累之一。<span class="cite">国家统计局：工业生产</span> <span class="cite">国家统计局：社会消费品零售</span></p>
+<p>需要澄清的是，“社会消费商品和服务零售总额”上半年增长2.7%，其中服务零售额增长5.3%，并不等同于传统社零增长2.7%。这一新口径反而进一步说明：消费没有全面熄火，而是从耐用品和标准化商品向旅游、线上娱乐、交通、医疗及其他服务迁移。商品零售+1.1%与服务零售+5.3%的落差，是K型消费结构的一部分。<span class="cite">国家统计局消费市场解读</span></p>
+<p>高端消费与大众消费也不是简单的“一边繁荣、一边衰退”。高净值群体更倾向于把支出投向稀缺体验、境外旅行、顶级奢侈品和具有资产属性的黄金；大众市场则更重视折扣、拼单、即时比价和耐用性。同一个消费者也可能在旅行或演唱会上高支出，同时在日用品上极端比价。因此，更准确的描述是“消费杠铃化”：一端是稀缺性与体验溢价，另一端是极致性价比，中间价位、缺少差异化的品牌承受最大压力。2026年“618”期间，路透社援引行业人士称交易周期被拉长、总额可能保持低个位数增长，但日均消费额下降，显示促销前置和消费透支仍在。<span class="cite">路透社：2026年中购物节</span></p>
+<p>黄金消费内部同样存在分化。世界黄金协会数据显示，中国一季度金饰需求量同比下降32%至85吨；但金价上涨使全球金饰消费金额创下一季度纪录。换言之，黄金首饰的实物消费量受到高价压制，而金条、金币和央行储备需求更接近避险及资产配置行为，不能把“买黄金”统一解释为消费繁荣。<span class="cite">世界黄金协会：2026年一季度金饰需求</span></p>
+<p>外贸构成K型结构的另一条上行线。上半年货物进出口总额达到25.47万亿元，同比增长16.9%；其中出口增长13.4%至14.73万亿元，进口增长22.1%至10.74万亿元。需要注意，部分外媒按美元口径给出的出口增速为17.6%，与人民币口径不能混用。<span class="cite">中国政府网：上半年外贸</span> <span class="cite">美联社：6月外贸</span></p>
+<p>所谓“出口悖论”，不是出口没有贡献，而是出口对就业和居民收入的传导系数下降。AI硬件、电子元件、船舶、高端装备及新能源汽车的资本和技术密度较高，单位出口额对应的新增就业可能少于服装、家具等劳动密集型产业；进口原材料价格上涨又会压缩部分下游利润。与此同时，出口收益更多沉淀在头部制造企业、供应链核心节点和财政收入中，未必同步转化为广泛工资增长。康奈尔大学经济学家 Eswar Prasad 据此将当前增长模式概括为“日益失衡”，认为在信心偏弱时显著提高内需并不容易。<span class="cite">美联社：GDP与内外需分化</span></p>
+<p>收入分布进一步放大这种差异。北师大中国收入分配研究院早期调查估算，约5.47亿人月可支配收入低于1000元；但该结果来自约7万个样本及较早时期收入数据，不能当作2026年现值。<span class="cite">暨南大学收入分配研究中心对该调查的口径说明</span></p>
+<p>2026年上半年官方数据显示，全国居民人均可支配收入为22981元，名义增长5.2%、实际增长4.2%；收入中位数为19036元，只相当于平均数的82.8%。人均财产净收入仅增长1.1%，远低于工资性收入的5.3%和经营净收入的6.5%。<span class="cite">国家统计局：居民收入和消费支出</span></p>
+<p>委托资料所称“最高收入组实际收入增长约6%”未能从国家统计局H1原始发布中确认，本文不将其作为事实引用。但平均数显著高于中位数、城乡实际收入增速分别为3.4%和5.5%，已经足以说明不同群体的收入路径并不同步。<span class="cite">国家统计局：居民收入和消费支出</span></p>
+<p>高储蓄因而包含两种完全不同的行为：企业和高净值家庭是“有能力消费、但不愿扩大风险敞口”，中低收入家庭则是“消费意愿存在、但可支配现金流不足”。前者增加现金、黄金和低风险资产配置，后者减少汽车、家电、装修等大额支出。二者共同压低消费倾向，却需要不同政策处理：对前者，关键是稳定资产价格和长期政策预期；对后者，关键是提高可支配收入、社会保障和公共服务的可得性。把所有储蓄都归结为“信心不足”，会低估收入约束本身。</p>
+
+<h4 class="sec anchor" id="s3-2"><a class="pin" href="#s3-2">#</a>3.2　软预算约束：从地方债务延伸到金融中介</h4>
+<p>软预算约束的本质，是市场主体预期其亏损、债务或低效投资最终会由上级政府、国有股东或金融机构承接。在地方政府融资平台、政策性项目和部分国企之间，这种预期可能导致投资决策弱化现金流约束：项目先上马，债务后重组；规模先做大，收益和风险以后再处理。短期看，它避免了信用链快速断裂；长期看，则会把银行资产、财政资源和新增信用持续锁定在低回报部门。</p>
+<p>审计署2026年6月23日发布的2025年度审计工作报告提供了具体证据。审计发现，部分地方融资平台在隐性债务未清零时违规备案退出；15个县绕道所属国企违规新增隐性债务41.97亿元；4个省通过安排国企贷款偿还或在债务系统中直接删除等方式，于2023—2025年虚减债务余额66.82亿元。这里的单位均为“亿元”，不是“亿”或“万亿元”。<span class="cite">审计署2025年度审计工作报告，第9—10页</span></p>
+<p>这些案例规模相对于地方政府总体债务并不大，却揭示了约束机制的问题：如果“化债”只改变债务名称、承债主体或系统记录，而没有提高项目现金流、处置低效资产或明确损失承担者，债务风险只是从地方政府表内转移到国企和银行资产负债表。银行因此面临双重压力：既要通过降息、续贷和债务置换稳定信用，又要保持资本充足和盈利能力。</p>
+<p>净息差持续收窄使这种矛盾更加突出。世界银行2026年7月《中国经济简报》指出，银行贷款增速放缓、净息差受到压缩，前期信用扩张中较大部分由票据融资支持短期支付，而非形成长期资本开支。这意味着金融总量未必等同于有效需求：票据融资可以满足企业周转和银行阶段性投放要求，但若缺少真实订单与投资回报，信用乘数会下降。<span class="cite">世界银行《中国经济简报》英文版</span></p>
+<p>所谓“票据冲量”应当谨慎界定。票据并非天然低质量融资，它具有期限短、定价透明和供应链支付便利等优点。问题在于，当一般贷款需求不足、银行又面临投放目标时，低利率票据可能被用于调节月末或季末规模。此时，新增贷款表面增加，企业固定资产投资和招聘却未同步上升。判断信贷质量不能只看贷款增量，而要同时观察企业中长期贷款、民间投资、制造业订单、应收账款和产能利用率。</p>
+<p>审计署对金融央企提出的“反规模情结”与此直接相关。2025年度审计报告揭示，部分金融企业通过“内卷式”竞争拉动规模扩张，特色金融机构名不副实；被抽查的4家银行共有970家科技支行，其中194家缺乏明显科技金融特色。审计还发现，一些金融企业以价格让利换取承销规模，说明“规模增长”可能以利润、风险定价和资源配置效率为代价。<span class="cite">审计署解读</span> <span class="cite">审计署审计报告</span></p>
+<p>因此，“摒弃规模情结、纠正造规模买规模”不能理解为压缩金融支持，而应理解为把考核从资产增量转向风险调整后收益、客户真实经营改善和政策目标实现程度。若地方平台、国企和银行都以规模排名为核心，软预算约束会形成闭环：地方依赖国企融资，国企依赖银行续贷，银行依赖隐性担保降低资本占用，最终由公共资产负债表吸收损失。</p>
+<p>“国企跑路、民企接棒”也不是准确描述。更现实的风险是，一些国企退出低回报、债务沉重或政策收紧的领域后，民营企业只有在产权清晰、历史债务隔离、价格机制正常时才愿意进入。若民企被要求接手遗留债务、维持过剩就业或承担准财政职能，所谓“接棒”只是把软预算约束转移给资本更薄弱的主体。</p>
+<p>2026年6月，国有控股企业工业增加值同比增长4.1%，私营企业增长4.3%，二者并未出现一方全面替代另一方的格局。<span class="cite">国家统计局：6月工业生产</span></p>
+<p>民营企业融资环境的主要矛盾仍是抵押品不足、风险溢价较高和长期资本供给不足。改善方向不是简单要求银行增加民企贷款比例，而是完善信用信息、知识产权融资、破产重整和担保风险分担机制，使银行能够依据项目现金流而非所有制和隐性担保定价。</p>
+
+<h4 class="sec anchor" id="s3-3"><a class="pin" href="#s3-3">#</a>3.3　消费困局与 AI 的 J 曲线</h4>
+<p>消费被称为经济“发动机”，但当前更像是低转速运行而非完全熄火。上半年社会消费品零售总额增长1.3%，服务零售额增长5.3%，居民人均消费支出名义增长4.7%、实际增长3.7%。这说明居民仍在消费，但商品消费、尤其是汽车、家电、家具和装修链条明显偏弱。<span class="cite">国家统计局：社会消费品零售</span> <span class="cite">国家统计局：居民收入和支出</span></p>
+<p>居民杠杆约占GDP的六成以上这一判断，在不同数据库中因住房公积金贷款、经营贷及GDP修订而存在差异，因此不宜把“65%+”当作无误差的精确值。但方向是清楚的：经过长期住房信贷扩张，居民资产负债表对房价、收入和利率更加敏感。高杠杆家庭即使获得降息，也可能优先提前还贷；低杠杆但收入不稳定的家庭则可能增加预防性储蓄。货币宽松由此首先改善偿债能力，未必立刻转化为消费。</p>
+<p>房地产财富效应的消失是消费传导链断裂的关键。过去，房价上涨同时提高家庭账面财富、抵押能力和对未来收入的信心，即使家庭不出售住房，也更愿意购买汽车、家电和教育服务。现在链条反向运行：房价预期走弱，家庭下调永久收入判断；新房销售下降又减少装修、家具和家电需求；开发商收缩投资进一步影响建筑、建材、地产服务和地方财政就业。由此产生的消费收缩，可能大于当期工资下降本身。</p>
+<p>稳定就业预期也在弱化。地方财政承压后，部分地区的事业单位、国企辅助岗位和外包服务出现降薪、延迟招聘或缩编现象。由于缺乏统一的全国统计，不能将局部案例外推为“体制内全面裁员”；但预期渠道仍然成立。体制内岗位过去不仅提供工资，也提供对住房贷款、婚育和长期消费决策的稳定锚。当报考人数增加而岗位供给趋紧，反映的可能不是公共部门回报上升，而是私人部门就业不确定性提高。</p>
+<p>AI又给就业—消费关系增加了一条J曲线。技术应用初期，企业首先看到的是降低客服、文案、编程、设计、财务和后台运营成本的机会；新增职业、技能培训和生产率红利则需要时间形成。于是曲线在短期向下：重复性任务减少、初级岗位收缩、工资议价能力下降；随后如果新产品、新企业和互补性岗位充分出现，产出和就业才可能回升。这个时间差可以概括为“AI先到，分配未到”。</p>
+<p>IMF 2026年研究估计，全球接近40%的工作岗位会受到AI驱动的变化影响；在AI技能需求较高的地区，五年后AI高暴露、低互补性职业的就业水平比其他地区低3.6%。IMF同时发现，发达经济体约十分之一、新兴市场经济体约二十分之一的招聘岗位要求至少一项新技能。该研究强调，AI技能通常带来工资溢价，但也可能扩大中间技能岗位的分化。<span class="cite">IMF：AI与新技能</span></p>
+<p>对中国而言，AI的短期替代效应可能集中在应届生入口岗位、平台运营、基础编程、翻译、内容审核和一般行政工作；创造效应则集中在算力基础设施、模型工程、工业自动化、数据治理、能源系统和面向具体行业的应用。问题在于，两类岗位在地区、教育背景和工作经验上并不一一对应。失去基础客服岗位的劳动者，无法自动转化为算法工程师；应届生也可能因为入门任务被自动化而失去积累经验的第一块阶梯。</p>
+<p>因此，AI政策不能只计算企业节省了多少人工成本，还应计算新岗位形成速度、劳动收入份额以及培训成本由谁承担。IMF对中国的政策建议包括扩大再培训、就业匹配和毕业生就业服务，并强化社会保护以缓冲劳动力替代。<span class="cite">IMF：中国第四条款磋商报告</span> 如果生产率红利主要沉淀为企业利润和资本估值，而工资、转移支付及公共服务改善滞后，AI会在短期进一步抬高储蓄、压低大众消费倾向。只有当技术收益通过工资、新职业、税收和社会保障重新进入居民部门，J曲线的上升段才会真正出现。</p>
+
+<h4 class="sec anchor" id="s3-4"><a class="pin" href="#s3-4">#</a>3.4　反内卷与地产终局</h4>
+<p>“反内卷”对应的不是一般意义上的减少竞争，而是治理低价倾销、重复建设、地方保护和缺乏退出机制的产能扩张。严格说，审计署不是最早提出“反内卷”的机构；但2025年度审计工作报告把金融企业依靠价格让利、通道包装和规模竞赛扩张的问题纳入审计，使“反规模情结”从工业领域延伸到金融体系。<span class="cite">审计署报告解读</span></p>
+<p>产能问题也不能简单以产量增长等同于过剩。更有效的判断标准是产能利用率、价格、库存、利润和企业现金流。2026年二季度，全国规模以上工业企业产能利用率为73.0%，同比下降1.0个百分点；非金属矿物制品业仅为59.6%，化学原料和化学制品制造业为69.4%，电气机械和器材制造业为70.3%，汽车制造业为70.8%。这些数字显示，地产链、部分新能源设备及一般制造确有供给宽松压力。<span class="cite">国家统计局：二季度产能利用率</span></p>
+<p>光伏、水泥和钢铁的机制并不完全相同。光伏过剩来自技术快速迭代、地方招商和资本集中进入，上游硅料、电池片及组件价格下降会加速落后产能退出，但也可能伤害仍有技术潜力的企业。水泥的主要约束是地产和基建需求下降，产品运输半径有限，区域性错配突出。钢铁则同时面临地产用钢下降、制造业用钢升级和出口摩擦，简单行政限产可能把问题转移到不同地区或产品类别。</p>
+<p>6月钢材产量为1.2656亿吨，同比持平，水泥产量为1.4423亿吨，同比下降5.6%；非金属矿物制品业增加值下降2.3%。这些数据说明，部分行业已经开始被动收缩，但距离资产、债务和人员的有序出清仍有距离。<span class="cite">国家统计局：6月工业生产</span></p>
+<p>“反内卷”若依靠行业协会统一价格或行政协调产量，可能产生新的进入壁垒。更稳健的路径是硬化预算约束：减少与产量挂钩的地方补贴，允许长期亏损企业破产重整，强化环保、能耗和产品质量标准，推动兼并收购，同时保障工人转岗和债权人依法受偿。这样出清的是低效率供给，而不是单纯保护现有龙头利润。</p>
+<p>房地产则进入比一般周期调整更深的结构性阶段。2026年上半年，全国房地产开发投资为3.8074万亿元，同比下降18.0%；新建商品房销售面积为4.014亿平方米，下降11.6%；销售额为3.7945万亿元，下降13.6%。开发投资、销售面积和销售金额同步下降，说明市场仍未形成依靠价格调整即可自动恢复的均衡。<span class="cite">国家统计局：上半年房地产市场</span></p>
+<p>“房价跌了但没人买”看似违反需求定律，实质是住房兼具消费品、投资品和抵押品属性。普通商品降价会刺激需求；住房降价若被理解为未来还会继续下降，反而提高等待的期权价值。房价走弱还会降低既有业主净资产、削弱换房能力，并使购房者担心开发商交付和区域公共服务的可持续性。因此，房地产需求不是价格的简单反函数，而是价格预期、就业稳定、人口流动、租售回报和交付信用的共同函数。</p>
+<p>地产“终局”也不意味着住房市场消失，而是其宏观功能重构：从土地财政和高周转开发驱动，转向存量更新、保障性住房、租赁、物业服务和区域分化。人口流入、产业基础较强且库存可控的城市可能较早稳定；人口流出、财政依赖卖地和库存高企的地区则需要更长时间调整。政策重点应由普遍刺激购房转向保交付、处理开发商债务、盘活闲置住房和改善公共服务。只有损失被识别、产权被理顺、交付信用恢复，房价调整才可能重新转化为真实购买力。</p>
+
+<h3 class="ch anchor" id="ch4"><a class="pin" href="#ch4">#</a>第4章　L2：外部环境</h3>
+<p>外部环境的主线已经从单一关税冲突扩展为科技、资本、能源和金融流动性并行的多层竞争。中国上半年进出口快速增长，但外部需求、AI投资周期、能源价格和主要央行政策都可能发生反转。对下半年而言，外需最大的风险不是立即崩塌，而是高基数、抢出口消退和贸易限制共同降低增量贡献。</p>
+
+<h4 class="sec anchor" id="s4-1"><a class="pin" href="#s4-1">#</a>4.1　G2 竞争—合作光谱</h4>
+<p>中美关系不宜用“脱钩”或“缓和”单一标签概括。更准确的框架是一条竞争—合作光谱：在先进芯片、AI模型、半导体设备、HBM、高性能计算和量子技术上，双方接近安全竞争；在一般商品贸易、金融稳定、气候和宏观政策沟通上，仍存在交易与协调空间；在药品、农业、关键矿产和供应链安全上，则呈现一边谈判、一边去风险的混合状态。</p>
+<p>科技竞争的核心已经由最终产品转向计算栈。先进制程芯片只是其中一环，上游还包括光刻、刻蚀、EDA、先进封装和HBM，下游包括数据中心、电力系统、云服务、模型训练和工业应用。美国的约束目标是延缓中国取得最先进算力，中国的应对则是扩大国产替代、算法效率和系统集成。量子计算目前商业化程度低于AI，但密码、通信和高端科研属性使其具有更强的国家安全色彩。</p>
+<p>这意味着科技链可能出现“高端分裂、成熟制程互嵌”的结构。最先进节点受到严格限制，但大量汽车、家电、工业控制和消费电子仍依赖成熟制程，完全切断会显著提高全球成本。中国企业可能通过芯片架构优化、集群计算和较低成本电力弥补单颗芯片性能差距；美国企业则继续在软件生态、先进设备和高端存储上保持优势。竞争结果更可能是两个部分兼容、关键节点分离的体系，而非完全独立的两套供应链。</p>
+<p>贸易层面，上半年进出口总额增长16.9%，出口增长13.4%，6月美元口径出口同比增长27%。电子元件、计算机零部件等AI相关贸易上半年增长接近57%至5.1万亿元，显示全球AI资本开支是外贸繁荣的重要来源。<span class="cite">中国政府网：上半年外贸</span> <span class="cite">美联社：AI与6月出口</span></p>
+<p>然而，其中可能包含抢出口和高基数效应。企业在关税、制裁或运输成本上升前提前发货，会把未来订单搬到当期，造成短期出口和库存同步上升。判断是否存在退潮，应观察下半年新出口订单、港口运价、海外库存和对主要贸易伙伴的月度出口，而不能仅凭H1总额。6月制造业PMI实际为50.3%，重新回到荣枯线以上，并非委托资料中的49.5%；但单月回升不足以证明外需风险消失。<span class="cite">国家统计局：6月PMI解读</span></p>
+<p>关税口径同样需要校准。按美国海关税收占中国商品进口额计算，2025年对华平均有效关税率约为30.6%，2025年12月约为31.1%，2026年2月约为29.6%。不同机构所称“约28%”可能来自产品加权、政策税率或特定时间点，不能与海关实际征收口径混用。<span class="cite">USAFacts基于美国人口普查局数据的测算</span></p>
+<p>委托资料中的“2026年7月G2峰会”也与当前公开日程不符。中美元首会晤已经在5月发生；截至7月23日，路透社报道双方正在准备可能于9月举行的再次会晤，并计划在9月开展正式AI对话。<span class="cite">路透社：潜在中美元首会晤</span> <span class="cite">路透社：中美AI对话</span></p>
+<p>公开检索未找到能够验证“高盛/野村2026年5月判断7月峰会预期极低”的原始报告，因此本文不作该项归因。但“低预期对应不对称上行风险”的逻辑仍成立：如果市场已经充分计入谈判停滞，那么有限的关税削减、技术沟通机制或农业采购安排也可能改善风险偏好；反过来，如果市场提前交易全面缓和，任何细节落空都会产生负面冲击。路透社7月23日报道，中方正就涉及约300亿美元贸易的对等关税削减方案征求意见，说明合作窗口没有关闭，但覆盖规模相对于双边贸易仍有限。<span class="cite">路透社：潜在关税削减</span></p>
+<p>因此，下半年基准情景应是“竞争性稳定”：科技限制不会根本逆转，贸易领域存在局部交易，双方通过沟通降低误判。上行风险是关税和AI治理取得可执行成果；下行风险则是芯片、关键矿产或地区安全事件导致谈判重新政治化。</p>
+
+<h4 class="sec anchor" id="s4-2"><a class="pin" href="#s4-2">#</a>4.2　大宗商品、美元与 IMF 约束</h4>
+<p>2026年6月CPI同比上涨1.0%、环比下降0.3%；PPI同比上涨4.1%、环比下降0.3%。PPI同比涨幅较上月扩大0.2个百分点，并达到近年高位，但CPI仍保持温和。这不是全面需求过热，而是上游原材料、地缘政治和供给约束推动的结构性再通胀。<span class="cite">国家统计局：CPI/PPI解读</span></p>
+<p>行业数据能够说明价格来源。6月煤炭开采和洗选业出厂价格同比上涨20.6%，有色金属矿采选业上涨25.5%，有色金属冶炼和压延加工业上涨23.4%，石油和天然气开采业上涨16.8%，化学原料和化学制品制造业上涨11.3%。上述五个资源与化工行业合计拉动PPI同比约3.25个百分点。与此同时，非金属矿物制品业价格下降4.4%，汽车制造业下降2.1%，说明上游涨价尚未转化为普遍的下游定价权。<span class="cite">国家统计局：CPI/PPI解读</span></p>
+<p>PPI上行包含两个渠道。第一是输入性通胀：原油、有色金属和部分化工品价格受到国际战争、航运和美元定价影响。第二是国内供给侧约束：安全检查、环保限产、反内卷治理和企业主动减产改变了部分产品供给。两者的政策含义不同。输入性通胀主要压缩贸易条件，需要汇率稳定、战略储备和供应来源多元化；供给侧约束若伴随落后产能退出，可能改善行业利润，但若执行过急，也会把成本转嫁给下游。</p>
+<p>PPI高于CPI还意味着利润在产业链上重新分配。资源企业受益于价格上涨，消费品和中游制造企业却可能面临“原料涨、终端不敢涨”的挤压。若企业通过削减工资、招聘和资本开支消化成本，输入性通胀最终仍会抑制内需。因此，PPI +4.1%不能简单解读为通缩结束，更不能推导出居民消费价格将同比例上升。</p>
+<p>黄金同时连接商品、货币和地缘政治。中国人民银行6月增持约48万盎司、接近15吨黄金，使官方黄金储备达到7544万盎司，连续第20个月增加；上半年累计增持约40吨。<span class="cite">路透社：央行黄金储备</span> <span class="cite">世界黄金协会：中国黄金市场更新</span></p>
+<p>央行购金可以被理解为储备多元化和尾部风险对冲，但不能据此断言短期“去美元化”完成。美元资产仍具有市场深度、流动性和贸易结算网络优势；黄金不产生利息，价格也会大幅波动。更合理的解释是，在制裁风险、地缘冲突和财政可持续性不确定性上升时，央行愿意牺牲部分收益来购买没有对手方信用风险的资产。</p>
+<p>委托资料所称“H1人民币对美元均值约7.25”与公开市场序列不符。2026年上半年人民币总体明显强于该水平，年中附近已接近每美元6.8元左右，故本文不引用7.25。错误使用这一数值会夸大人民币贬值和输入性通胀压力。分析汇率时还应区分在岸CNY、离岸CNH、中间价和月度平均价，不能用单一时点替代半年均值。</p>
+<p>美元方向取决于美国通胀、能源价格和美联储反应函数。路透社7月调查显示，多数经济学家预计美联储2026年余下时间把政策利率维持在3.50%—3.75%，但认为年内加息风险较高的受访者明显增加；主要原因是能源价格上涨及美国通胀仍高于目标。<span class="cite">路透社：美联储利率调查</span></p>
+<p>如果美联储维持高利率而中国继续宽松，中美利差将对人民币资产配置形成压力；但出口顺差、结汇、资本管制和央行预期管理可以缓冲单边贬值。反之，若美国经济降温、美元回落，中国货币政策空间会扩大，进口能源和原材料成本也会下降。因此，汇率不是单纯由利差决定，而是利差、贸易收支、风险偏好和政策可信度的共同结果。</p>
+<p>IMF 7月将中国2026年经济增长预测由4.4%上调至4.6%，主要因为一季度实际增长5.0%高于此前预期；同时，IMF将油气价格上涨和贸易伙伴需求走弱列为下行因素。<span class="cite">IMF：2026年7月世界经济展望发布会</span></p>
+<p>这一判断与本文基准情景一致：上半年增长为全年目标提供缓冲，但能源、出口和内需传导决定了缓冲能维持多久。</p>
+
+<h4 class="sec anchor" id="s4-3"><a class="pin" href="#s4-3">#</a>4.3　私人信贷、影子银行与金融央企的规模约束</h4>
+<p>私人信贷风险看似属于美国和欧洲金融市场，但会通过全球风险偏好、美元融资成本、资产管理公司估值和跨境资本流动影响中国。过去十多年，银行监管趋严推动企业贷款迁移到私人信贷基金、BDC和其他非银行机构。与此同时，另类资产管理公司不断把原本面向养老金、保险和主权基金的产品销售给高净值及零售客户，形成“资产仍然不流动，资金却被包装成半流动”的结构。</p>
+<p>美联储2026年5月《金融稳定报告》估计，截至2025年底，美国私人信贷贷款约为1.4万亿美元，占非金融企业债务约10%。部分半流动私人信贷基金的赎回申请在2025年第四季度增加，并于2026年第一季度进一步加速，一些基金收到的赎回申请显著超过净资产的5%。不过，美联储的结论仍是：由于基金设有赎回上限、资本锁定和其他流动性工具，当前系统性风险总体有限且可管理。<span class="cite">美联储：私人信贷与资金风险</span> <span class="cite">美联储金融稳定报告PDF</span></p>
+<p>BDC即商业发展公司，其基本功能是为中小型、通常无法直接进入公开债券市场的企业提供融资。上市BDC的股票可以交易，但底层贷款缺乏活跃二级市场；非上市、半流动BDC则通常允许投资者按净资产值定期赎回，并设置季度上限。问题由此产生：净资产值依赖模型和内部估值，底层资产却无法按该估值迅速出售。先退出的投资者可能按尚未充分下调的净值获得现金，剩余投资者承担后续减值，形成“先走优势”。</p>
+<p>路透社3月报道，黑石BCRED在2025年底资产规模约820亿美元，一次赎回安排对应约7.9%的股份；私人信贷基金越接近耗尽现金缓冲，投资者越可能提前赎回。<span class="cite">路透Breakingviews：BDC赎回</span> 路透社4月又指出，公开交易的私人信贷基金相对净资产值折价达到五年半以来较深水平，反映投资者怀疑模型估值滞后于真实信用状况。<span class="cite">路透社：私人信贷基金折价</span></p>
+<p>IMF认为，半流动工具目前约占直接贷款生态的五分之一，许多零售基金设置季度净资产5%的赎回上限，因此流动性错配尚未等同于银行式挤兑；但随着零售投资者占比提高，缓慢估值、赎回自由裁量权和先退出优势可能放大市场波动。<span class="cite">IMF《全球金融稳定报告》</span></p>
+<p>对冲基金在这条链条中既可能提供流动性，也可能放大压力。一些基金会买入大幅折价的上市BDC债券或股票，帮助市场完成价格发现；另一些基金则可能做空资产管理公司、购买信用保护或利用杠杆押注折价扩大。当私人信贷基金为满足赎回出售较优质资产时，组合剩余质量下降，融资方要求更高抵押和利差，压力可能从基金份额传到公开债券与银行授信。</p>
+<p>这与传统中国影子银行并非同一结构。中国过去的影子银行更多依赖信托贷款、委托贷款、理财嵌套和通道业务，并常与银行隐性担保及地方融资平台相连；欧美私人信贷则主要依靠资产管理机构直接向企业放贷。但两者共享一个风险：表面期限或流动性承诺优于底层资产，而投资者又预期管理人、银行或政府会在压力时提供支持。</p>
+<p>审计署披露的中国银行案例说明，金融创新和通道结构也可能被用于监管或税收套利。中国银行于2023年4月至2025年8月安排两家下属金融机构作为通道，把包含大量出资仅1元至100元本行员工的11只私募基金包装成公募基金，利用公募基金所得税优惠逃避税款23.67亿元。<span class="cite">审计署2025年度审计工作报告，第10页</span></p>
+<p>这里应使用“审计认定的逃避税”这一中性表述，而不能泛化为整个公募基金行业或中国银行全部资管业务。其宏观意义在于，金融机构若把考核重点放在规模、税后收益和产品数量上，就可能通过多层通道制造形式合规，而忽略政策优惠的真实目的。它与地方政府虚假化债、科技支行缺乏科技特色具有共同逻辑：指标被完成，但经济功能没有实现。</p>
+<p>金融央企的“反规模情结”因此应包含三层约束。第一，产品层面要穿透识别最终投资者、底层资产和税收待遇，防止私募借公募外壳套利。第二，资产层面要把流动性承诺与底层资产期限匹配，对难以交易的私人资产设置充分的赎回门槛和压力测试。第三，考核层面要降低资产管理规模、承销金额和客户数量的权重，提高风险调整后收益、服务实体经济效果及合规成本的权重。</p>
+<p>对中国宏观经济而言，海外私人信贷压力的直接敞口或许有限，真正需要关注的是三个传导渠道：全球信用利差扩大使中国企业离岸融资成本上升；另类资产管理公司被迫降杠杆可能引发股票、债券和大宗商品同步出售；美元流动性收紧则可能强化资本回流美国。基准情景不是私人信贷复制全球金融危机，而是其高收益、低波动、准流动性的营销叙事被重新定价。若赎回压力稳定，影响主要局限于估值和融资成本；若能源冲击、AI相关软件贷款违约和美联储加息叠加，私人信贷就可能成为跨市场波动的放大器。</p>
+
+<div class="thesis"><b>本章结论：</b>2026年上半年中国经济仍有4.7%的实际增长、5.4%的工业增长和16.9%的外贸增长作为支撑，但内部结构呈现生产强于消费、服务强于商品、高技术强于传统地产链、出口收益强于就业收入传导的K型特征。下半年最重要的变量不是单一刺激规模，而是三条传导能否恢复：出口利润能否转化为工资和内需，金融宽松能否从票据及债务置换进入真实投资，AI和产业出清的生产率收益能否通过就业、收入和社会保障进入居民部门。外部则需同时防范抢出口退潮、能源输入性通胀、美联储高利率和私人信贷流动性重估。</div>
+
+<!-- ============================================================ -->
+<!-- 第 5 章 -->
+<!-- ============================================================ -->
+<div class="part-divider anchor" id="part3">
+  <div class="pd-kicker">PART Ⅲ</div>
+  <h2>第 5 章　微观传导：从宏观到就业与个人资产负债表</h2>
+  <div class="pd-rule"></div>
+</div>
+
+<h3 class="ch" style="border-bottom:none;margin-bottom:6px;font-size:19px">第5章　微观传导：从宏观、行业到就业、教育与个人资产负债表</h3>
+
+<h4 class="sec anchor" id="s5-0"><a class="pin" href="#s5-0">#</a>5.0　口径校准与核心结论</h4>
+<p>2026年上半年，中国经济的主要特征不是简单的“增长放缓”，而是供给端、外需端与居民需求端之间的显著分化：生产和出口仍有韧性，高技术制造业扩张较快，但房地产投资和民间投资继续收缩，居民商品消费与财产性收入增长偏弱。这种分化最终通过企业利润、招聘意愿、工资和资产价格，传导至教育、婚育以及个人消费决策。</p>
+<p>在展开行业分析前，需要校正几项容易混淆的口径：</p>
+<ul class="plain">
+<li>上半年GDP同比增长4.7%，其中一季度增长5.0%、二季度增长4.3%；第三产业增长5.2%，快于第二产业的3.9%。</li>
+<li>上半年CPI同比上涨1.0%；PPI上半年同比上涨1.5%，4.1%是6月单月同比涨幅。</li>
+<li>上半年社会消费品零售总额增长1.3%，其中商品零售增长1.1%、餐饮收入增长2.8%；新设的社会消费商品和服务零售总额增长2.7%，其中服务零售增长5.3%。</li>
+<li>上半年货物进出口总额增长16.9%，其中出口增长13.4%、进口增长22.1%；因此，16.9%不宜表述为“出口增速”。</li>
+<li>6月制造业PMI为50.3%，而非49.5%；其中新订单指数为51.2%，但从业人员指数仅48.5%，显示产出改善尚未完全转化为新增就业。</li>
+</ul>
+<p>以上数据均来自国家统计局2026年上半年国民经济运行情况及国家统计局6月PMI数据。</p>
+<p>这组数据揭示了一条重要传导链：</p>
+<div class="thesis" style="font-size:15px">出口与高技术制造支撑GDP → 资本和政策向先进制造集中 → 传统地产、消费和部分服务业利润承压 → 企业招聘更谨慎、灵活就业扩大 → 居民收入预期与资产价格走弱 → 教育、住房、婚育及消费决策趋于保守。</div>
+<p>因此，宏观增长并不必然等价于多数家庭体感同步改善。决定微观感受的关键，不仅是GDP增速，还包括增长发生在哪些行业、是否创造足够就业，以及新增收入最终流向哪些群体。</p>
+
+<h4 class="sec anchor" id="s5-1"><a class="pin" href="#s5-1">#</a>5.1　宏观经济向行业传导</h4>
+
+<h5 class="sub">5.1.1　AI与半导体：投资主线由GPU向存储、封装和电力迁移</h5>
+<p><span class="lead-in">需求端。</span>AI产业需求仍处于资本开支驱动阶段，但瓶颈正从单纯获取GPU，扩展至高带宽存储、先进封装、光互联、电力供应、液冷和数据中心并网。英伟达管理层在2026年的公开表述中已经将内存、晶圆、CoWoS封装、电力和数据中心容量并列为AI基础设施约束；Computex相关产业分析估计，Vera Rubin代际单机柜功率可升至约370kW，后续架构可能进一步提高，意味着AI投资的增量价值开始沿硬件链条向存储、电源、变压器、液冷和先进封装扩散。相关判断可参见<span class="cite">Computex 2026产业链分析</span>。</p>
+<p>中国市场的特殊性在于，AI基础设施建设与半导体国产替代同时发生。长鑫科技科创板IPO在2026年5月获审核通过，拟募集资金295亿元，用于产能升级、技术迭代与前瞻研发；不过，公开材料显示国产HBM目前更接近HBM3量产和HBM3E研发、验证阶段，不能笼统写成“HBM3E已全面国产化”。<span class="cite">长鑫科技IPO审核信息</span>和上交所问询回复共同表明，国产存储的确定性主要在资本投入与追赶速度，而非已经消除技术代差。</p>
+<p><span class="lead-in">供给与盈利端。</span>上半年高技术制造业增加值增长13.3%，计算机及办公设备制造业投资增长8.1%，显著高于整体制造业表现；但这并不意味着AI全产业链都具有同等盈利能力。<span class="cite">国家统计局数据</span>显示，宏观层面的AI投资繁荣首先利好拥有稀缺产能和工程壁垒的存储、先进封装、光模块、电力设备及数据中心基础设施企业；缺乏客户黏性、仅提供同质化算力租赁或套壳应用的企业，可能面临利用率下降、价格竞争和折旧压力。</p>
+<p><span class="lead-in">政策端。</span>半导体政策的核心由单纯扩产逐步转向“自主可控、先进存储、关键设备和产业链协同”。房地产开发投资上半年下降18.0%，而高技术产业投资增长4.6%，正是资本从土地和建筑链向知识产权、计算设备与先进制造迁移的宏观映射。<span class="cite">国家统计局固定资产投资数据</span>说明，这一转型有明显的“明暗两面”：新产业提高长期生产率并形成资本市场热点，但其劳动密集度通常低于房地产及相关服务业，因而难以在短期内完全填补传统行业收缩留下的就业缺口。</p>
+<div class="callout co-cc"><div class="co-label">CC 反共识情景</div>
+<p>“投入4元AI资本只能产生1元利润”并非目前可由统一权威统计验证的行业事实，宜作为压力测试而非基准结论。BCG对财务领域AI项目的调查显示中位ROI约为10%，约三分之一受访者表示收益有限或没有收益；麦肯锡调查中，能够把AI贡献转化为较高企业级EBIT影响的“高绩效者”仅占约6%。参见<span class="cite">BCG AI投资回报调查</span>和<span class="cite">麦肯锡2025全球AI调查</span>。因此，本报告将“4元投入对应1元增量利润”定义为乐观企业与低效项目之间的中性压力情景：若应用收入与降本无法兑现，硬件需求可能先被提前透支，继而出现算力利用率下降、设备订单波动和资本开支收缩。AI方向长期成立，并不排除中期产能过剩和估值回撤。</p>
+</div>
+
+<h5 class="sub">5.1.2　新能源车、光伏与储能：出口吸收产能，但利润重新分配</h5>
+<p><span class="lead-in">新能源汽车需求端。</span>2026年汽车行业呈现“内需弱、出口强”的显著背离。上半年国内乘用车零售约870万辆，同比下降20.2%；但汽车出口达到约510万辆，同比增长65.3%，其中新能源汽车出口约236万辆、同比增长约120%。这意味着“新能源汽车出口只增长18%”并不符合当前中汽协口径。相关数据见<span class="cite">中国汽车流通协会6月市场分析</span>和<span class="cite">中汽协口径汇总</span>。</p>
+<p>国内乘用车零售走弱反映补贴边际退坡、前期需求透支、收入预期偏弱和价格战后消费者等待新车型的共同影响；出口则承担了更重要的产能消化功能。对整车企业而言，出口占比提高有助于改善工厂利用率，并可能通过海外较高售价增厚毛利，但同时增加物流、渠道建设、汇率、当地合规和售后成本。</p>
+<p><span class="lead-in">贸易与政策端。</span>欧盟针对中国制造纯电动车的最终反补贴税率因企业不同而异，BYD为17.0%、上汽为35.3%，其他企业适用不同税率；该措施期限原则上为五年，且是在欧盟原有汽车进口关税基础上的附加成本。<span class="cite">欧盟委员会正式税率文件</span>显示，贸易壁垒并未阻止出口增长，但会推动车企从整车出口转向海外组装、零部件输出、当地供应链和合资渠道。长期看，海外产能可以降低关税暴露；短期看，则会增加资本开支和管理复杂度。</p>
+<p><span class="lead-in">光伏供给与盈利端。</span>光伏仍面临明显过剩，但“组件价格已普遍降至0.58元/W”不适合作为2026年上半年代表性均价。公开招标数据显示，年初组件定标区间约为0.743—0.900元/W、均价约0.759元/W；4月主流TOPCon组件报价约0.763元/W。<span class="cite">年初组件招标统计</span>及<span class="cite">InfoLink价格跟踪</span>表明，0.58元/W更可能对应特殊库存、降档品或个别低价订单。即便校正价格，行业核心矛盾仍未改变：终端装机需求长期增长，但制造端产能建设领先需求，硅料、硅片、电池片和组件盈利不断被压缩。政策强化质量分级、能耗约束和“反内卷”，将加速落后产能退出，而技术效率、融资成本和海外渠道成为新的盈利分水岭。</p>
+<p><span class="lead-in">储能和电池端。</span>1—5月国内新型储能新增装机约56.2GWh，同比增长25%，需求仍具韧性；但2026年上半年电池级碳酸锂价格并非单边下跌，而是宽幅震荡、价格中枢较上年回升，原料成本对电芯和储能系统利润形成阶段性挤压。数据见<span class="cite">储能与碳酸锂半年回顾</span>。本报告判断，储能链条的利润将更多集中在具备规模采购、系统集成、安全认证及海外渠道的龙头，中小电芯厂和单纯依靠低价竞争的集成商仍将承受现金流压力。</p>
+
+<h5 class="sub">5.1.3　房地产：局部价格企稳尚未修复全国资产负债表</h5>
+<p><span class="lead-in">供给与需求端。</span>上半年房地产开发投资下降18.0%，新建商品房销售面积下降11.6%、销售额下降13.6%，房企到位资金下降20.2%；新开工和竣工面积分别下降23.4%和23.7%。<span class="cite">国家统计局房地产数据</span>说明，房地产仍处于缩表阶段，开发商更加偏好核心城市、改善型产品和短周期项目，低能级城市土地与库存项目则继续承压。</p>
+<p>价格层面出现明显区域和产品分化。6月一线城市新房、二手房价格环比上涨，二、三线城市则下降或持平；一线城市二手住宅环比上涨0.3%，但全国销售面积和投资仍然收缩。<span class="cite">国家统计局70城房价解读</span>意味着一线城市的局部反弹不能直接外推为全国周期反转。</p>
+<p><span class="lead-in">“老破小”能否carry。</span>核心城市低总价老旧住房确有阶段性成交支撑，原因包括首付门槛较低、成熟配套和部分学区或区位价值；国金证券的市场分析将上海总价不超过400万元的老旧小户型视为二手房托底力量之一。<span class="cite">国金证券研究摘要</span>显示，这类需求更像“低总价流动性修复”，而不是全市场价格上涨的发动机。老破小缺乏居住品质、停车、电梯和物业等条件，其成交改善难以扩散至远郊大户型、三四线库存或开发商土地投资。因此，“老破小正carry”只能描述部分核心城市交易结构，不能视为全国房地产复苏证据。</p>
+<p><span class="lead-in">盈利与政策端。</span>房企盈利模式正在从高周转土地增值转向代建、物业、城市更新和高品质现房。政策目标则由刺激普遍加杠杆转向保交付、去库存、城市更新和稳定核心市场预期。对银行而言，地产风险正在由新增开发贷转向存量项目重组、抵押物价值下降和地方财政关联风险；对地方政府而言，土地收入下降进一步约束公共投资和绩效支出。</p>
+<p>房地产对消费的影响不仅来自施工链条，更来自财富效应。中国人民银行对城镇家庭的调查显示，住房资产占家庭总资产约59.1%。<span class="cite">央行城镇家庭资产负债调查</span>虽然基于较早样本，但仍说明住房价格对居民净财富具有较高权重。当家庭认为住房难以升值甚至难以快速变现时，即使没有出现按揭违约，也会通过提高储蓄、推迟换车装修和减少教育娱乐支出产生负面财富效应。</p>
+
+<h5 class="sub">5.1.4　消费品：K型分化由价格差异转向资产负债表差异</h5>
+<p><span class="lead-in">需求端。</span>上半年商品零售仅增长1.1%，而服务零售增长5.3%；粮油食品和通讯器材类限额以上零售分别增长7.4%和14.4%。<span class="cite">国家统计局消费数据</span>表明，消费并非全面萎缩，而是必选品、通信设备和服务体验相对较强，传统可选商品和高客单价耐用品偏弱。</p>
+<p>所谓消费“K型分化”，本质上是不同资产负债表对同一宏观冲击的反应不同。高净值群体拥有更充分的金融资产和跨境配置渠道，对就业和住房价格的敏感度较低，黄金、保险、境外资产、医疗和体验消费仍有需求。胡润研究院报告显示，2026年中国高端消费市场规模约1.56万亿元，但同比下降5%，同时受访高净值群体最倾向增持黄金和境外投资、减持房地产。<span class="cite">胡润2026高净值生活报告</span>说明，顶奢消费也不是普遍繁荣，而是从炫耀性消费转向安全、健康、体验与资产保全。</p>
+<p>大众消费者则更重视单位价格、优惠和即时满足，折扣零售、平价咖啡、电商白牌、社区团购和二手交易受益。打车转公交、外卖转自炊、星巴克转平价咖啡，不一定意味着生活质量单向下降，更准确的解释是消费者主动重组高频支出：降低品牌溢价与配送费用，同时保留社交、健康和线上娱乐。其结果是销量可能保持，但品牌客单价、加盟商利润和渠道费用率承压。</p>
+<p><span class="lead-in">盈利与政策端。</span>对消费企业而言，未来盈利分化取决于三项能力：极低成本供应链、可验证的品牌差异，以及会员和服务收入。处在中间价格带、品牌溢价不足又缺乏成本优势的企业最容易被挤压。以旧换新、服务消费扩容等政策可以缓解需求不足，但若居民主要问题是就业预期与住房财富缩水，补贴更可能改变购买时点，而非永久抬升消费倾向。本报告判断，消费复苏需要从“促销驱动”进一步转向工资增长、社会保障和资产负债表稳定。</p>
+
+<h5 class="sub">5.1.5　医疗：支付方式改革重塑医院、药企与药店利益分配</h5>
+<p><span class="lead-in">需求端。</span>医疗需求受老龄化和慢病支撑，周期性弱于汽车、地产和可选消费。上半年医疗保健类CPI同比上涨2.0%，高于总体CPI的1.0%。<span class="cite">国家统计局价格数据</span>但稳定需求不等于所有医疗企业都能稳定盈利，因为行业利润更多受医保支付、集采和处方流转规则影响。</p>
+<p>“上海自2025年试点定额报销”的表述需更正。上海推进的是DRG/DIP付费、长期住院按病种分值床日付费、中医优势病种按疗效价值付费等改革，而非对普通患者实施统一的“定额报销”。<span class="cite">上海2025年医改工作要点</span>显示，支付端正在从按项目扩张转向按病种、质量和疗效约束成本。这将抑制不必要检查和过度用药，也可能压缩依赖院内高加成耗材及普通仿制药的利润空间。</p>
+<p><span class="lead-in">供给与盈利端。</span>创新药受益于目录谈判、商业保险和本地创新支持，但仍须证明临床价值；竞争充分的纯仿制药继续受到集采降价、医院预算和一致性评价约束。零售药房方面，电子处方外流提供新增客流，但追溯码、外配处方和医保个人账户白名单强化了合规要求。国家医保局要求定点药店逐步实现药品追溯信息“应采尽采、依码结算”，并在2026年进一步推动个人账户支付白名单管理，参见<span class="cite">国家医保局药品追溯要求</span>和<span class="cite">2026年个人账户监管通知</span>。</p>
+<p>这些规则提高IT、药师、供应链和审计成本，有利于全国及区域龙头提升集中度，小型单体药店则面临客流与合规双重压力。处方外流并非药店的无条件利好，而是把竞争从“门店数量”转向真实处方承接、专业药事服务和可追溯供应链。</p>
+<p><span class="lead-in">中医药与保健品。</span>在经济不确定时期，消费者可能将高额可选消费替换为相对低价的健康管理、滋补和保健产品，形成类似“口红效应”的结构性韧性。但这一需求高度依赖品牌信任和合规宣传，不能把心理安慰与经临床验证的治疗效果混为一谈。政策支持中医优势病种按疗效价值付费，也意味着未来有效性评价会更重要，而非所有中药和保健产品均能受益。</p>
+
+<h5 class="sub">5.1.6　金融：息差、信用成本和资本市场改革形成三重分化</h5>
+<p><span class="lead-in">银行。</span>2026年一季度商业银行净息差降至1.40%，较上年末下降0.02个百分点；官方不良贷款率为1.51%，不良贷款余额约3.7万亿元。<span class="cite">金融监管总局监管指标</span>和<span class="cite">第一财经息差报道</span>表明，银行当前主要问题不是账面不良率突然上升，而是低息差压缩了吸收未来信用损失的利润缓冲。</p>
+<p>“隐含不良率3.5%—5%”不能直接写成事实。央行压力测试中，不同冲击情景下部分测算的不良率可能升至约3.08%或5.02%，但这属于情景结果，不是当期实际不良率。<span class="cite">中国人民银行金融稳定报告</span>支持的中性表述应为：若把关注类贷款、重组资产、逾期但尚未下迁贷款及城投和地产风险纳入，银行潜在信用成本可能高于官方不良率，但具体幅度依赖定义，不能用单一比例替代监管数据。</p>
+<p>审计署对2025年度审计结果的解读指出，部分金融企业存在通过“内卷式”竞争拉动规模扩张的问题。<span class="cite">审计署报告解读</span>说明国有大行正在弱化单纯规模情结，转向贷款真实用途、风险定价和资本回报。其结果可能是低风险国企和先进制造获得较低成本信贷，而地产链、地方平台及弱资质中小企业融资约束上升。</p>
+<p><span class="lead-in">券商。</span>券商受益于股票发行、并购重组、长期资金入市及资本市场制度改革，但盈利仍取决于市场成交和风险偏好。行业机会将从单纯经纪佣金转向财富管理、机构业务、并购顾问和跨境服务；中小券商若缺乏资本、客户和研究能力，仍可能面临整合。</p>
+<p><span class="lead-in">保险。</span>利率下行对保险不是单向利好。短期内，存量长久期债券价格上涨可形成估值收益，储蓄型保险相对存款的吸引力增强；长期看，新配置资产收益率下降会加大负债成本和利差管理压力。因此，拥有较低保证利率负债、久期匹配能力和权益投资能力的保险公司更可能受益，而依赖高保证收益产品的机构面临再投资风险。</p>
+
+<h5 class="sub">5.1.7　出海与出口：从成品出口转向跨国生产网络</h5>
+<p><span class="lead-in">需求端。</span>上半年货物出口增长13.4%，机电产品出口增长20.1%，占出口总额63.5%；对共建“一带一路”国家进出口增长14.8%。<span class="cite">国家统计局及海关数据</span>显示，出口仍是国内需求偏弱背景下的重要增长支柱。与此同时，中国与东盟上半年贸易额增长18.2%，反映东盟不仅是终端市场，也是供应链节点。<span class="cite">中国—东盟贸易数据</span></p>
+<p>“中国+1”并不意味着产业链整体离开中国，更接近“最后组装分散、上游供给仍依赖中国”。华创证券按BEC口径测算，中国出口中间品占比由2017年的41.9%升至2025年前11个月的47.4%，而消费品占比由36.6%降至28.7%；资本品占比约20.1%。<span class="cite">华创证券出口结构研究</span>说明，中国出口结构正在由服装、家具和一般消费品，向电子元件、机械设备、化工材料、电池及生产资料倾斜。</p>
+<p><span class="lead-in">供给与盈利端。</span>东南亚适合电子、纺织和消费品组装；墨西哥具备接近北美市场的区位优势；中东则通过能源、基建和主权资本吸引新能源、制造和数字基础设施投资。企业利润不再只来自“中国生产、海外销售”，而是来自设备出口、零部件供应、技术授权、海外工厂和当地服务。不过，海外生产需要承担税务、劳工、合规、汇率和政治风险，规模越小的企业越难分摊这些固定成本。</p>
+<p><span class="lead-in">政策风险端。</span>欧盟电动车关税只是贸易壁垒的一种形式，未来约束还可能包括原产地、本地就业、数据安全、碳足迹和补贴资格。美国政策的不确定性也不应继续表述为“大选后未知”：2026年已进入政策执行与重新谈判阶段，企业需要应对的是现行关税及未来调整，而不是抽象的大选风险。本报告判断，出海主线仍将延续，但真正受益者会从低价出口商转向具备海外组织、合规和本地供应链能力的企业。</p>
+
+<h4 class="sec anchor" id="s5-2"><a class="pin" href="#s5-2">#</a>5.2　就业层：总量稳定与结构压力并存</h4>
+<p>上半年全国城镇调查失业率平均为5.2%，6月为5.0%，表面上总体稳定；但制造业和非制造业PMI从业人员指数在6月分别为48.5%和45.8%，均低于荣枯线。<span class="cite">国家统计局就业数据</span>和<span class="cite">PMI分项数据</span>意味着企业产出恢复更多依赖现有员工、自动化和提高工时，而非同步扩招。</p>
+<p>青年失业率的口径需要准确描述：国家统计局在2023年8月暂停发布原口径数据，2024年1月起恢复发布不包括在校学生的16—24岁劳动力失业率，同时增加不包括在校学生的25—29岁指标，并非“不再公布16—24岁失业率”。官方解释称，16—24岁城镇人口中在校学生占六成以上，因此新口径意在聚焦真正进入劳动力市场者，详见<span class="cite">国家统计局口径说明</span>。</p>
+<p>2026年6月，不含在校生的16—24岁城镇劳动力失业率为14.9%，5月为15.6%；25—29岁为7.1%。<span class="cite">国家统计局数据库数据转引</span>表明，“实际青年失业率约15%—20%”没有必要另行包装成民间估算：官方新口径本身已处于该区间下沿。更值得关注的口径限制，是调查失业率不包括退出求职的非劳动力人口，也不直接反映降薪、低工时、专业错配和被迫灵活就业。因此，青年就业压力不能只靠将官方数字任意上调判断，而应结合工资、工作时长、合同稳定性及专业匹配度观察。</p>
+<p>2026届普通高校毕业生预计达1270万人，创出新的规模高点。<span class="cite">教育部毕业生就业信息</span>意味着新增劳动力高度集中于白领岗位，而当前高增长行业——半导体设备、AI基础设施、先进制造——对学历与技能要求高，但吸纳人数未必足以覆盖毕业生总量。房地产、教培、传统互联网和地方公共部门的扩张能力下降，加剧了“学历供给增长快于优质初级岗位”的错配。</p>
+<p>AI的就业作用不是简单替代全部白领，而是首先压缩重复性、规则化、可数字化的初级任务，包括基础文案、客服、翻译、资料整理、简单编程、财务录入和部分研究支持。同时，数据治理、模型评测、AI产品、算力运维和行业复合岗位增加。其净影响取决于企业是否将效率收益用于扩张业务，还是用于减少人员。国家相关研究把这一过程概括为岗位“有增有减、此消彼长”，参见<span class="cite">中国劳动和社会保障科学研究院观点</span>。</p>
+<p>体制内岗位也并非无限扩张。第三方公考数据称2026年省考招录规模下降超过16%，但国央企招聘相对稳定；这一结论来自招聘平台统计而非全国统一行政数据，应谨慎使用。<span class="cite">2026毕业季公考数据报告</span>更能支持的判断是，政策性岗位仍承担稳就业作用，但准入门槛和竞争强度上升。</p>
+<p>最终，就业结构呈现三层分化：高技能工程与复合型岗位保持溢价；传统白领初级岗位被压缩；平台配送、家政、零售、直播和自由职业吸收剩余劳动力。灵活就业扩大能够缓冲公开失业率，却也意味着收入波动、社会保障和职业晋升问题从企业转移到个人。</p>
+
+<h4 class="sec anchor" id="s5-3"><a class="pin" href="#s5-3">#</a>5.3　教育层：从资产溢价转向回报率核算</h4>
+<p>房地产调整首先改变了教育资源的资本化方式。北京部分顶级学区老旧住房从高点回落约30%—40%的说法，可以在个别小区成交案例中得到支持，但不是官方全市指数。例如市场跟踪显示，部分西城传统学区房跌幅超过40%；该数据来自房产媒体样本，存在楼层、户型和成交时点差异，不能外推至全部北京学区房。<span class="cite">北京核心学区个案跟踪</span>显示的是学区溢价下降，而非教育需求消失。</p>
+<p>学区房回调的传导有两面。一方面，家庭不再愿意为单一入学资格支付过高溢价，“房产投资+教育资格”的组合收益下降；另一方面，真正稀缺的师资、升学路径和信息资源仍然存在，高收入家庭可能转向私立、国际课程、竞赛和个性化辅导。因此，“鸡娃”并未全面结束，而是从普遍加码转向更明显的阶层分化：中产减少低回报、跟风式投入，高净值家庭继续购买稀缺教育资源，普通家庭更加依赖校内体系和性价比产品。</p>
+<p>出国留学也从单一美国路径转向全球联申。新东方2026年调查称，超过半数意向留学生计划同时申请两至三个国家或地区，美国受政策影响降至第三，中国香港长期排名上升，新加坡等亚洲目的地保持吸引力。<span class="cite">新东方2026留学趋势</span>属于机构问卷而非全国行政统计，但与英国、香港、新加坡和马来西亚申请需求上升的外部数据方向一致。<span class="cite">美联社留学流向调查</span>指出，英国本科国际申请增长，中国申请人数同比增加10%，亚洲区域内留学需求也在提高。</p>
+<p>教育消费因此进入“回报率核算”阶段：家庭更关注专业就业、留学后工作权利、总成本和汇率风险，而不再只购买名校标签。宏观不确定性越高，教育仍越可能被视为长期保险，但其形式将从无差别追加投入转向多目的地、短学制、职业技能和更严格的成本收益比较。</p>
+
+<h4 class="sec anchor" id="s5-4"><a class="pin" href="#s5-4">#</a>5.4　房地产—消费—婚育—人口的完整传导链</h4>
+<p>房地产对家庭行为的影响，可以概括为：</p>
+<div class="thesis" style="font-size:15px">房价和流动性下降 → 家庭净资产缩水 → 预防性储蓄提高 → 消费与换房减少 → 婚姻住房门槛上升 → 生育与教育预算承压 → 新生儿数量下降 → 未来住房和教育需求进一步收缩。</div>
+<p><span class="lead-in">第一环是资产负债表。</span>住房占城镇家庭总资产约59.1%，使房价变化直接影响家庭对自身财富的判断。<span class="cite">央行家庭资产调查</span>当房价上涨时，家庭即使不出售房屋，也更愿意通过装修、汽车、旅游和信贷扩大消费；房价下降时，家庭则倾向提前还贷、增加现金储备和减少可选消费。上半年居民人均财产净收入仅增长1.1%，明显低于工资性收入5.3%的增速，也与资产收益偏弱相呼应。<span class="cite">国家统计局居民收入数据</span></p>
+<p><span class="lead-in">第二环是婚姻决策。</span>住房在部分城市仍是结婚成本的重要组成，首付、按揭和未来换房预期会影响结婚时间。2026年一季度全国结婚登记169.7万对，同比减少11.3万对、降幅约6.2%；截至本报告数据日，民政部尚未公布完整上半年全国数据。<span class="cite">民政部一季度数据转引</span>因此，不能把个别“520”登记高峰当作趋势反转，也不能编造上半年累计值。</p>
+<p><span class="lead-in">第三环是生育。</span>住房只是生育决策的一个变量，就业稳定性、托育、医疗、教育竞争、女性职业成本和代际支持同样重要。房地产调整可能降低未来购房成本，对未购房年轻人形成正面效应；但在短期内，已购房中产的财富缩水和就业焦虑更容易形成负面效应。</p>
+<p>截至2026年7月，全国尚未公布2026年上半年出生人口总量，因而本章不采用未经核实的“上半年新生儿”估计。可比的最新年度数据是2025年出生人口792万人、死亡人口1131万人，自然减少339万人。<span class="cite">国家统计局人口数据</span>在低结婚登记、育龄女性规模下降和高养育成本共同作用下，出生人口仍面临下行压力，但政策补贴、生肖偏好和疫情后婚育节奏可能造成年度波动，不能把房价变化视为单一因果解释。</p>
+<p>这一链条还会反向反馈房地产：新生儿和新婚家庭减少，意味着未来学区房、改善型住房和三四线新增住房需求趋弱；开发商和地方政府因此进一步降低投资，建筑、家居和地方公共岗位减少，再次压低居民收入预期。打破这一循环不能只依赖降低首付或按揭利率，还需要稳定青年就业、增加保障性租赁住房、降低教育与托育成本，并改善公共服务随人口流动配置的能力。</p>
+
+<h4 class="sec anchor" id="s5-5"><a class="pin" href="#s5-5">#</a>5.5　个人层：四类群体的资产负债表与行为变化</h4>
+
+<h5 class="sub">5.5.1　高净值群体：从追求单一收益转向风险隔离</h5>
+<p>高净值家庭的主要变化不是全面削减消费，而是提高资产流动性、币种分散与跨区域配置。胡润研究院调查显示，高净值人群境外投资目的地主要集中于中国香港、新加坡和美国，占比分别为52%、40%和35%；未来计划增配的资产中，保险、黄金和股票分别获得47%、42%和34%的受访者选择。<span class="cite">胡润高净值投资白皮书</span></p>
+<p>这类家庭通常具有企业股权、金融资产和多套不动产，房地产下降会影响账面财富，但较少立即压缩基本生活。其应对方式包括减持流动性差的非核心房产，配置黄金、保险和境外证券，在香港或新加坡建立金融和教育连接，并通过信托、保单和公司架构安排代际传承。</p>
+<p>但“全球配置”不等于把资金简单换成美元。汇率、税务居民身份、跨境申报、境外市场估值和法律风险都可能削弱收益。黄金也缺乏现金流并可能高波动。中性策略应强调资产、币种、司法辖区和期限分散，而非追逐单一避险资产。</p>
+<p>高净值家庭对子女教育的预算约束较弱。胡润调查中，66%的受访高净值人群将子女教育列为主要资金用途之一。<span class="cite">胡润调查摘要</span>因此，留学目的地变化更多反映政策、安全和身份规划，而非单纯“留不起学”。这一群体的需求将继续支撑国际教育、私人医疗、高端保险和跨境财富管理。</p>
+
+<h5 class="sub">5.5.2　中产家庭：缩表、降级与教育投入之间的冲突</h5>
+<p>中产是本轮微观传导中最敏感的群体。其收入依赖工资，资产集中于住房，同时承担按揭、育儿和赡养责任。央行历史调查显示住房约占城镇家庭总资产的59.1%，接近通常所说的“六成”；但该比例并非2026年实时数据，不能表述为所有中产家庭当前均超过60%。<span class="cite">央行调查</span></p>
+<p>中产家庭面对的是“资产价格下降但负债名义额不变”：住房市值回落后，贷款余额不会同比例减少；若奖金、跳槽机会和行业景气同时下降，家庭会优先降低风险。典型行为包括提前还贷、推迟改善型换房、减少长途旅游和大额耐用品、从高溢价品牌转向平价替代，以及提高现金和保险配置。</p>
+<p>“星巴克转瑞幸”只是消费重组的符号。真正变化是家庭不再把未来收入增长视为默认情景，而是按当前可见现金流安排支出。消费降级并非完全停止消费，而是减少品牌溢价、延长产品使用周期、使用优惠券和二手平台，同时保留孩子教育、父母医疗等难以削减的项目。</p>
+<p>教育是中产缩表中最困难的部分。学区房价格下降可以降低尚未购房家庭的进入成本，却使已高价买入者承受资本损失；留学和培训则同时面对汇率、学费和就业回报的不确定性。结果是家庭更容易出现“教育难产”：既不愿彻底放弃教育竞争，也难以继续无上限投入。职业教育、区域内留学、短学制硕士和可验证就业技能会因此获得更多需求。</p>
+
+<h5 class="sub">5.5.3　年轻人：低资产暴露带来相对自由，但收入约束更强</h5>
+<p>年轻人的优势是房产权重较低，因而房价下降带来的直接财富损失有限；对租房者而言，住房价格和租金调整甚至可能降低居住成本。这使其比已高杠杆购房的中产更容易接受长期租赁、异地工作和职业转换。</p>
+<p>但年轻人面临更强的收入与就业约束。2026届高校毕业生预计1270万人，6月不含在校生的16—24岁城镇劳动力失业率为14.9%。<span class="cite">教育部及国家统计局数据转引</span>显示，青年面对的是求职人数高、初级白领岗位收缩和工作经验门槛上升的组合冲击。</p>
+<p>其消费通常表现为低固定成本与小额体验并存：不急于购房买车，减少高价婚礼和长期负债，但保留游戏、演出、短途旅行、宠物、健身及情绪消费。这不是简单的“躺平”，而是在职业和收入不确定下缩短决策期限。</p>
+<p>婚育意愿下降也与这种短期化有关。结婚和生育意味着住房、教育、时间以及长期稳定现金流承诺；当工作合同、城市落脚和收入路径不清晰时，推迟婚育具有个人层面的理性。房价下降能够缓解首付压力，却不能单独解决就业、托育和职业中断成本。</p>
+<p>对年轻人而言，最具防御性的资产不是某一种金融产品，而是可跨行业迁移的技能、较低固定负债和足够的现金缓冲。AI工具能力只有与专业、销售、工程、医疗、法律或供应链知识结合，才更可能提高议价能力；单纯获得通用工具证书难以形成长期壁垒。</p>
+
+<h5 class="sub">5.5.4　体制内群体：稳定仍在，但收入与岗位预期出现分化</h5>
+<p>“体制内普遍降薪、缩编”缺乏统一全国统计支持，不能作为无差别事实。更准确的情况是，中央与财政实力较强地区的基本工资和岗位稳定性仍高，而部分财政承压地区的绩效奖金、津贴和编外岗位可能收紧。</p>
+<p>例如云南瑞丽官方答复确认，当地曾自2024年10月起暂停部分行政事业单位月绩效工资，后于2025年6月筹资恢复发放2025年度绩效，金额合计3220万元。<span class="cite">瑞丽市财政局公开答复</span>这一案例能够说明地方财政压力向绩效收入传导，但不能外推为全国公务员基本工资下降。</p>
+<p>与此同时，事业单位考核结果依法可以与岗位、工资、奖励及合同续订挂钩。<span class="cite">事业单位工作人员考核规定</span>意味着体制内正在从“稳定且收入刚性”转向“基本稳定、绩效差异化”。编外、劳务派遣和依赖项目经费的人员通常先感受到预算收紧，正式编制人员的风险相对较低。</p>
+<p>对体制内家庭而言，稳定预期的边际下降会产生较强心理影响。过去依靠确定工资和养老金形成的购房、教育和消费计划，需要重新纳入绩效延迟、晋升放缓和地区财政差异。其合理应对与中产类似：避免把绩效奖金视为固定收入，控制按揭和消费贷，提高家庭应急资金，并区分中央、省级、基层以及正式编制、编外岗位之间的真实风险。</p>
+
+<h4 class="sec anchor" id="s5-6"><a class="pin" href="#s5-6">#</a>5.6　传导链总结</h4>
+<p>2026年上半年的微观经济图景可以归纳为三条同时运行的链条。</p>
+<p><span class="lead-in">第一条是增长链：</span>出口、高技术制造和AI基础设施投资支撑生产，资金与人才向半导体、先进制造、电力设备及出海产业集中。这条链创造高附加值岗位，但资本和技术密集度较高，对总就业的拉动弱于过去的地产、建筑和消费扩张。</p>
+<p><span class="lead-in">第二条是缩表链：</span>房地产投资与销售下降，住房财富效应减弱，地方财政、银行风险偏好和居民消费同步趋于谨慎。企业减少扩张和招聘，居民提高预防性储蓄，又进一步削弱内需。</p>
+<p><span class="lead-in">第三条是分化链：</span>高净值家庭通过全球化和金融资产分散风险；中产承受房产与职业双重压力；年轻人以低负债、租房和推迟婚育应对收入不确定性；体制内则从无差别稳定走向地区、岗位和绩效分化。</p>
+<div class="thesis" style="font-size:15.5px">因此，本报告的核心判断是：2026年上半年宏观经济并未失去增长动力，但增长动力与多数家庭资产、就业和消费之间的传导效率下降。真正决定下半年微观修复力度的，不只是GDP或出口能否继续增长，而是高技术和出海部门能否扩大就业，房地产能否停止侵蚀家庭净财富，以及公共政策能否降低教育、医疗、住房和生育所对应的长期现金流不确定性。</div>
+
+<!-- ============================================================ -->
+<!-- 第 6-8 章 -->
+<!-- ============================================================ -->
+<div class="part-divider anchor" id="part4">
+  <div class="pd-kicker">PART Ⅳ</div>
+  <h2>第 6-8 章　L3 投资方向 · 三情景 · 反证条件系统</h2>
+  <div class="pd-rule"></div>
+</div>
+
+<h3 class="ch anchor" id="ch6"><a class="pin" href="#ch6">#</a>第6章　L3 投资方向与配置建议</h3>
+
+<div class="callout co-note"><div class="co-label">口径说明</div>
+<p>本章沿用项目既定假设：2026年上半年GDP增长4.7%，一、二季度分别增长5.0%和4.3%；出口增长16.9%；6月制造业PMI为49.5；6月消费品价格增长1.1%、CPI增长1.0%、PPI增长4.1%。其中，国家统计局当前公布的6月制造业PMI为50.3%，官方人民币口径上半年出口增长13.4%，与项目口径存在差异，建议总报告发布前统一数据来源与币种口径。GDP、CPI和PPI数据与官方发布一致。<a href="https://www.stats.gov.cn/sj/zxfbhjd/202607/t20260716_1964142.html" target="_blank" rel="noopener">国家统计局GDP核算</a>、<a href="https://www.stats.gov.cn/zwfwck/sjfb/202607/t20260709_1964082.html" target="_blank" rel="noopener">6月价格数据</a>、<a href="https://www.stats.gov.cn/sj/zxfbhjd/202606/t20260630_1964032.html" target="_blank" rel="noopener">6月PMI数据</a></p>
+</div>
+
+<h4 class="sec anchor" id="s6-1"><a class="pin" href="#s6-1">#</a>6.1　L3投资矩阵：从宏观判断进入可交易层</h4>
+<p>所谓L3，不再停留于“经济偏弱、政策偏松”的宏观叙事，而是将判断落实为资产方向，并预先写明进场触发条件、证伪指标和退出依据。2026年下半年的核心矛盾并非所有部门同步衰退，而是利润在产业链、收入阶层和资产负债表之间重新分配：出口、高技术制造、资源品与少数高收入消费仍可能扩张，中端消费、地产链和依赖利差的金融部门承受压力。这构成“K型分化”配置框架。</p>
+
+<p><b>表6-1　L3投资矩阵</b>（原 PDF 表格文字溢出互相遮挡，以下按可辨识内容还原，截断处以 …※ 标注）</p>
+<div class="tbl"><table style="min-width:860px">
+<thead><tr><th>方向</th><th>判断与配置方式</th><th>触发条件</th><th>证伪指标</th><th>主要风险</th></tr></thead>
+<tbody>
+<tr><td><b class="rowhead">押注K型上半身：AI、半导体、出口链、顶奢<span class="trunc">…※</span></b></td><td>选择拥有技术壁垒、全球订单或高净值客户的头部公司</td><td>高技术制造增加值连续两月增长10%以上；AI资本<span class="trunc">…※</span></td><td>AI资本开支同比增速降至10%以下；出口连续两月<span class="trunc">…※</span></td><td>估值透支、美国技术限制、出口关税、人民币快速升值</td></tr>
+<tr><td><b class="rowhead">回避K型下半身：中端消费、地产链、银行净息差</b></td><td>对依赖大众客流、价格竞争、地产开工和信贷规模扩张<span class="trunc">…※</span></td><td>社零低于2%、居民中长期贷款偏弱、房地产销售额两<span class="trunc">…※</span></td><td>社零连续两月超过3.5%；新房销售同比回正；居民<span class="trunc">…※</span></td><td>政策刺激超预期、地产收储形成价格底、银行高分红抵<span class="trunc">…※</span></td></tr>
+<tr><td><b class="rowhead">黄金与非人民币资产</b></td><td>作为货币、财政和地缘风险的组合保险，而非单纯通胀<span class="trunc">…※</span></td><td>全球央行维持净购金；实际利率与金价继续脱钩；美元<span class="trunc">…※</span></td><td>全球央行连续两个季度转为净售金；实际利率上行同时<span class="trunc">…※</span></td><td>黄金拥挤交易、美元流动性冲击、高位波动、海外资产<span class="trunc">…※</span></td></tr>
+<tr><td><b class="rowhead">上游资源与能源：PPI受益端</b></td><td>PPI上涨首先改善拥有存量资源、低成本产能和长协<span class="trunc">…※</span></td><td>PPI同比保持3%以上；采掘或原材料价格强于加工<span class="trunc">…※</span></td><td>PPI在三季度降至1%以下或重新转负；商品库存快<span class="trunc">…※</span></td><td>地缘冲突缓和、全球衰退、政策保供稳价、资源税上调</td></tr>
+<tr><td><b class="rowhead">红利底仓：高股息公用事业、电信</b></td><td>红利不是无风险债券替代，而是弱内需环境中的现金流<span class="trunc">…※</span></td><td>无风险利率维持低位；股息率相对十年国债的利差处于<span class="trunc">…※</span></td><td>长端利率上行50bp以上；自由现金流连续两个季度<span class="trunc">…※</span></td><td>交易拥挤、利率突然上行、政策性降价、煤价或燃料成<span class="trunc">…※</span></td></tr>
+<tr><td><b class="rowhead">海上风电、储能、电网</b></td><td>配置顺序为“电网设备与容量价值—储能系统与安全环<span class="trunc">…※</span></td><td>电网投资和招标同比增长15%以上；海风核准、开工<span class="trunc">…※</span></td><td>电网招标连续两个季度低于计划；储能利用小时下降<span class="trunc">…※</span></td><td>地方财政约束、海风审批和施工延期、储能安全事故<span class="trunc">…※</span></td></tr>
+<tr><td><b class="rowhead">HBM国产替代：长鑫IPO与良率条件</b></td><td>IPO只解决融资和产能问题，不能自动证明技术兑现</td><td>IPO资金实际投入HBM3、先进封装和下一代工艺<span class="trunc">…※</span></td><td>良率连续两个季度低于35%；量产延期超过两个季度<span class="trunc">…※</span></td><td>技术代差、良率爬坡慢、资本开支过重、估值提前透支</td></tr>
+<tr><td><b class="rowhead">自动驾驶：激光雷达、智驾芯片、Robotaxi</b></td><td>按四阶段资金路径配置：第一阶段交易政策与试点，资<span class="trunc">…※</span></td><td>L3/L4准入扩围；激光雷达与国产智驾芯片前装订<span class="trunc">…※</span></td><td>重大安全事故导致准入收紧；前装渗透率停滞；芯片订<span class="trunc">…※</span></td><td>法规责任不清、技术路线分化、车企自研替代供应商<span class="trunc">…※</span></td></tr>
+<tr><td><b class="rowhead">反内卷受益者：光伏、水泥、钢铁龙头</b></td><td>做多的不是全行业，而是产能退出后仍有现金流、成本<span class="trunc">…※</span></td><td>落后产能退出或兼并重组落地；行业开工率下降而产品<span class="trunc">…※</span></td><td>产能不降反升；价格上涨后库存同步上升；头部企业再<span class="trunc">…※</span></td><td>行政干预不等于供给出清、龙头承担保供责任、原料成<span class="trunc">…※</span></td></tr>
+</tbody>
+</table></div>
+
+<p>房地产尤其需要区别“跌幅收窄”和“趋势反转”。上半年房地产开发投资下降18.0%，新房销售面积下降11.6%，开发企业到位资金下降20.2%，说明行业尚处于销售、融资、开工相互强化的负循环。<span class="cite">国家统计局房地产数据</span></p>
+<p>因此，本报告基线情景中“下半年房地产投资再降5%—8%”指下半年同比降幅或边际拖累假设，不应误写为全年房地产投资只下降5%—8%。</p>
+
+<h4 class="sec anchor" id="s6-2"><a class="pin" href="#s6-2">#</a>6.2　五条核心建议</h4>
+
+<h5 class="sub">建议一：增配黄金与非人民币资产</h5>
+<p>黄金和非人民币资产承担两个不同任务：黄金对冲全球法币信用、地缘政治和政策失误；非人民币资产降低投资组合对中国增长、人民币汇率和国内资产相关性的集中暴露。两者不应合并成“做多美元”：如果美国财政信用本身成为风险来源，黄金与美元资产可能出现方向分化。</p>
+<div class="callout co-trigger"><div class="co-label">触发条件</div><p>全球央行继续净购金、黄金在实际利率高位下保持强势、人民币隐含波动率上升，或者国内增长下修而外部资产盈利预期未同步下修。</p></div>
+<div class="callout co-falsify"><div class="co-label">证伪条件</div><p>央行连续两个季度净售金、全球财政风险溢价下降、人民币出现由基本面驱动的持续升值，同时黄金跌破中期趋势。证伪后应先削减黄金战术仓，不应机械清空全部外币资产。</p></div>
+
+<h5 class="sub">建议二：增配上游资源与能源，即PPI受益端</h5>
+<p>6月PPI同比上涨4.1%，并连续四个月上升，而CPI仅上涨1.0%，意味着名义价格改善集中于工业品而非居民终端。最直接受益者是拥有资源禀赋和价格传导能力的上游；中游如果采购价格上升而终端价格受竞争限制，反而成为利润转移的承担者。</p>
+<p>但PPI上升并不等于所有周期股受益。必须区分“资源稀缺导致的利润改善”和“进口成本冲击导致的被动涨价”。配置应集中于低成本曲线左侧、资产负债表稳健、资本开支克制的企业。</p>
+<div class="callout co-trigger"><div class="co-label">触发条件</div><p>PPI保持3%以上，资源品现货升水、库存下降，龙头经营现金流增速高于产量增速。</p></div>
+<div class="callout co-falsify"><div class="co-label">证伪条件</div><p>PPI降至1%以下、库存持续累积，或资源企业重新进行高杠杆扩产。</p></div>
+
+<h5 class="sub">建议三：减配A股银行与地产</h5>
+<p>这项建议并非判断所有银行都会发生信用损失，而是认为传统“做大信贷规模—获取稳定利差”的盈利模式同时受到有效融资需求不足、按揭与地产贷款收缩、存量贷款重定价和负债成本刚性的挤压。“反规模情结”意味着政策和银行经营目标由追求贷款增量转向风险、资本消耗与有效需求，数量宽松未必自动转化为银行利润。</p>
+<p>地产方面，销售尚未形成持续现金回流，投资、新开工和到位资金仍在收缩。银行方面，即使不良率短期稳定，净息差也可能先于信用成本反映压力。</p>
+<div class="callout co-trigger"><div class="co-label">触发条件</div><p>居民中长期贷款持续偏弱、房地产销售仍为负增长、银行净息差继续下降、信贷增量更多流向低收益政策性项目。</p></div>
+<div class="callout co-falsify"><div class="co-label">证伪条件</div><p>新房销售连续三个月同比回正、居民中长期贷款明显扩张、净息差企稳回升且不依赖一次性负债成本下降。若证伪，可先从区域优质银行和负债优势银行恢复配置，而不是直接反转至全行业超配。</p></div>
+
+<h5 class="sub">建议四：回避中游制造与中端消费</h5>
+<p>PPI—CPI剪刀差扩大意味着中游制造承担原料成本，而终端消费价格又受需求疲弱和价格竞争压制。社零增速偏低、消费品价格仅增长1.1%，说明大众消费尚不具备普遍提价条件。最脆弱的企业往往同时具有原料成本高、品牌溢价低、库存重、渠道返利高和应收账款周期长等特征。</p>
+<p>需要避免把“中游”简单等同于制造业。具备专利、设备认证、全球份额或长期合同的专业制造仍可能将成本转嫁出去；应回避的是缺少议价权的同质化环节。</p>
+<div class="callout co-trigger"><div class="co-label">触发条件</div><p>购进价格继续快于出厂价格，行业库存上升，终端折扣率扩大，应收账款增速高于收入。</p></div>
+<div class="callout co-falsify"><div class="co-label">证伪条件</div><p>PPI—CPI差收窄至1个百分点以内，龙头连续两个季度实现量价齐升、毛利率改善和库存下降。</p></div>
+
+<h5 class="sub">建议五：做多波动率与尾部对冲</h5>
+<p>当前资产定价容易把政策托底理解为“增长不会明显下穿”，却可能低估信用需求收缩、地产二次探底和抢出口回撤同时发生的非线性冲击。所谓“credit collapse tail risk”在本报告中指新增信用无法形成有效私人部门支出、贷款需求和资产价格相互削弱的尾部状态，并非断言银行体系即将发生流动性危机。</p>
+<p>可采用股指保护性看跌、跨式波动率策略、黄金、久期资产和现金等多工具组合，避免把全部对冲集中在单一产品上。对冲预算应事先确定，不能等PMI跌至47以后才追买波动率。</p>
+<div class="callout co-trigger"><div class="co-label">触发条件</div><p>PMI跌破49、信用脉冲转负、地产销售降幅扩大、新出口订单下降，同时隐含波动率仍处历史低位。</p></div>
+<div class="callout co-falsify"><div class="co-label">证伪条件</div><p>PMI连续三个月高于50、社融结构改善、地产销售回正、盈利预期上调，而隐含波动率已大幅升至历史高分位。此时应止盈尾部保护，防止长期时间价值损耗。</p></div>
+
+<h4 class="sec anchor" id="s6-3"><a class="pin" href="#s6-3">#</a>6.3　参考组合</h4>
+<p>对中等风险、以人民币计价的多资产组合，可将100%的风险预算初步划分为：</p>
+<div class="tbl"><table style="min-width:420px">
+<thead><tr><th>资产方向</th><th>风险预算</th></tr></thead>
+<tbody>
+<tr><td>黄金及非人民币资产（其中黄金10%、非人民币高流动性资产10%）</td><td class="num">20%</td></tr>
+<tr><td>上游资源与能源</td><td class="num">15%</td></tr>
+<tr><td>高股息公用事业、电信</td><td class="num">20%</td></tr>
+<tr><td>AI、半导体、优质出口链及高端消费</td><td class="num">20%</td></tr>
+<tr><td>海上风电、储能和电网</td><td class="num">10%</td></tr>
+<tr><td>反内卷龙头</td><td class="num">5%</td></tr>
+<tr><td>波动率及尾部对冲</td><td class="num">5%</td></tr>
+<tr><td>现金和短久期资产</td><td class="num">5%</td></tr>
+</tbody>
+</table></div>
+<p>这一比例是宏观研究中的示范组合，不是针对特定投资者的个性化建议。若CC悲观概率上调至35%的审计框架成立，应将高估值成长和出口链各削减，合计把黄金及非人民币资产提高至25%、尾部对冲提高至10%、现金提高至10%。若乐观情景被触发，则优先从现金和对冲仓转入出口链、消费及具备订单兑现的成长资产。</p>
+
+<h3 class="ch anchor" id="ch7"><a class="pin" href="#ch7">#</a>第7章　三情景推演</h3>
+
+<h4 class="sec anchor" id="s7-1"><a class="pin" href="#s7-1">#</a>7.1　基线情景（主流概率60%）：政策对冲有效，K型分化持续</h4>
+<p>基线情景假定政策能够阻止经济失速，却不足以在短期内修复居民和地产部门的资产负债表。上半年GDP增长4.7%，但从一季度5.0%降至二季度4.3%，显示增长动能已经减弱。与此同时，信息软件服务业增长较快，而建筑业和房地产业偏弱，增长结构本身就是K型分化的体现。<span class="cite">国家统计局上半年GDP核算</span></p>
+<p>在这一情景下，下半年GDP约增长4.5%—4.8%，全年增长4.6%—4.8%。外需由上半年的高增长回落，7—8月开始体现抢出口透支和高基数，预计下半年出口增长3%—5%，全年累计约10%—12%。出口不会立即转负，因为高技术、船舶、机械和部分新兴市场需求仍有韧性，但其对增长的边际贡献显著下降。</p>
+<p>消费保持弱修复。居民实际收入仍有增长，但财产净收入和住房财富效应偏弱，消费者倾向增加储蓄、追求性价比，而非进行全面可选消费升级。预计全年CPI约1.5%，核心CPI温和上行，但缺乏进入高通胀区间的需求基础。PPI则可能受资源、能源和供给治理支持而高于CPI，形成上游利润改善、中游利润受压、终端消费偏弱的分配格局。</p>
+<p>房地产仍是主要拖累。基线假设下半年房地产开发投资同比再下降约5%—8%，销售降幅逐季收窄，但全国层面难以回正。一线和强二线核心区可能先出现成交修复，低能级城市继续消化库存。政策目标仍是防止交付、信用和地方财政风险扩散，而非重新启动大规模土地金融周期。</p>
+<p>货币政策预计降准一次、政策利率下调10bp，并配合结构性工具支持科技、制造、保障房和设备更新。财政则通过专项债、政策性金融工具、中央项目和消费补贴前置形成托底。政策的约束是：降息过大可能加剧银行净息差压力和汇率波动，而财政支出如果主要进入资本密集型项目，对居民消费的乘数仍然有限。</p>
+<div class="callout co-trigger"><div class="co-label">基线触发条件</div>
+<ul>
+<li>7—8月出口降至个位数，但保持正增长；</li>
+<li>PMI围绕49—50波动，没有连续跌破48；</li>
+<li>社零逐步回升但低于3%；</li>
+<li>房地产销售降幅收窄但未转正；</li>
+<li>降准一次、降息约10bp，财政支出增速高于名义GDP。</li>
+</ul>
+</div>
+<div class="callout co-falsify"><div class="co-label">基线证伪条件</div>
+<ul>
+<li>Q3 GDP高于5.0%，出口和消费同时加速，则情景向乐观切换；</li>
+<li>PMI连续两月低于48、地产销售降幅重新扩大、出口转负，则向悲观切换；</li>
+<li>CPI升至2.5%以上且PPI继续走高，则需从“弱需求”框架切换至更强的再通胀框架。</li>
+</ul>
+</div>
+<div class="callout co-asset"><div class="co-label">资产映射</div><p>黄金、资源、红利构成底仓；AI、半导体、电网和优质出口链作为结构性进攻仓；低配银行、地产、中端消费和缺乏议价权的中游制造。波动率对冲维持小比例常备仓。</p></div>
+
+<h4 class="sec anchor" id="s7-2"><a class="pin" href="#s7-2">#</a>7.2　乐观情景（25%）：G2缓和与消费启动</h4>
+<p>乐观情景的首要外生条件是G2关系阶段性缓和。峰会如果形成关税冻结、现有措施延期、部分行业豁免或恢复高层经贸磋商，企业将降低最坏情景库存和供应链迁移成本。出口企业不再仅依靠提前交付，而能够重新安排正常订单周期。</p>
+<p>第二个条件是政府支出超预期，并且更多进入居民端、公共服务和存量项目清欠，而非单纯增加低回报基建。若地方拖欠款下降、消费补贴覆盖服务业、就业预期改善，居民的预防性储蓄率可能回落。收入增长与消费倾向同时改善，才是真正的“消费启动”。</p>
+<p>该情景下，下半年GDP回到约4.8%，全年增长4.8%—5.0%；社零回升至3%以上，服务消费和中端可选消费开始扩散；出口保持8%以上，全年出口增速显著高于基线。房地产销售可能在核心城市率先回正，全国投资降幅收窄，但仍难重现地产对总需求的强拉动。</p>
+<p>CPI可能向1.8%—2.2%抬升，核心CPI和服务价格比商品价格更能体现内需修复。PPI仍高，但PPI—CPI剪刀差开始收窄，企业利润从上游向中游和消费端扩散。银行信贷需求改善，净息差下行压力可能被贷款量、非息收入和资产质量改善部分抵消。</p>
+<p>政策组合表现为财政支出和中央转移支付超预期，货币政策不必大幅降息。若汇率稳定、资本流动改善，政策可以更多依靠财政与改革，而非持续压低利率。</p>
+<div class="callout co-trigger"><div class="co-label">乐观触发条件</div>
+<ul>
+<li>G2峰会形成可验证的关税冻结、豁免清单或谈判时间表；</li>
+<li>7—8月出口仍超过10%，新出口订单回到50以上；</li>
+<li>社零连续两月超过3%，服务消费和可选商品同步改善；</li>
+<li>M1增长超过5%，居民中长期贷款连续三个月转强；</li>
+<li>财政支出和政府采购明显快于预算节奏；</li>
+<li>PMI连续三个月高于50。</li>
+</ul>
+</div>
+<div class="callout co-falsify"><div class="co-label">乐观证伪条件</div>
+<ul>
+<li>峰会只有原则表述，没有关税、出口管制或采购安排的实质变化；</li>
+<li>社零改善完全来自补贴商品，补贴退坡后再次下滑；</li>
+<li>出口高增但新订单、港口吞吐和企业收入不匹配；</li>
+<li>地产销售在短期促销后重新下跌；</li>
+<li>政府支出增加但企业应收账款和居民就业没有改善。</li>
+</ul>
+</div>
+<div class="callout co-asset"><div class="co-label">资产映射</div><p>降低尾部对冲和现金，提高消费、互联网平台、优质银行、出口链和具备盈利兑现的成长股；资源品仍可持有，但从纯上游价格弹性转向受益于需求扩散的工业金属与设备。豪宅和高端消费可能继续强势，但中端消费的相对收益更大，因为其基线预期更低。</p></div>
+
+<h4 class="sec anchor" id="s7-3"><a class="pin" href="#s7-3">#</a>7.3　悲观情景（主流概率15%）：地产二次探底与出口退潮</h4>
+<p>悲观情景不是单一数据低于预期，而是三条负反馈链同时出现。</p>
+<p><span class="lead-in">第一条是出口链。</span>上半年高增长包含抢出口、订单前置和低基数因素；如果下半年关税升级、海外库存完成补充，出口可能迅速降至-1%—3%。出口企业减少用工和资本开支，又会向居民收入和制造业投资传导。</p>
+<p><span class="lead-in">第二条是房地产链。</span>销售下滑导致预售资金和按揭回款减少，开发企业进一步压缩新开工和拿地；土地收入下降限制地方财政，地方支出和拖欠款问题反过来影响企业现金流。上半年房地产投资、销售和到位资金已经同步收缩，表明负反馈基础并未消失。</p>
+<p><span class="lead-in">第三条是信用链。</span>货币供应充足不代表有效信用需求充足。如果居民不愿加杠杆、民企缺少高回报项目、银行又受到净息差和风险资本约束，降息可能更多体现为存量债务重定价，而不是新增支出。由此形成“利率下降—信用需求仍弱—盈利预期下修—资产价格承压”的循环。</p>
+<p>该情景下，下半年GDP约增长4.0%—4.3%，全年增长4.3%—4.5%；出口降至-1%—3%；PMI跌至47—48；房地产销售和投资降幅重新扩大。CPI可能回落至1%附近，核心CPI偏弱；PPI如果由全球资源冲击维持高位，则出现“增长下降、成本仍高”的类滞胀压力，如果大宗商品同时下跌，则进入更典型的需求型通缩压力。</p>
+<p>政策会显著加码，可能包括多次降准、累计降息超过20bp、中央财政扩张、政策性银行工具、存量房收购和地方债务置换。但政策存在时滞，资产价格可能先交易盈利和信用下修，再交易刺激。</p>
+<div class="callout co-trigger"><div class="co-label">悲观触发条件</div>
+<ul>
+<li>出口连续两月低于3%，其中至少一个月转负；</li>
+<li>PMI低于48，新订单、新出口订单和就业指数同步下降；</li>
+<li>房地产销售额降幅重新扩大至15%以上；</li>
+<li>居民中长期贷款转为持续负增长；</li>
+<li>M1回落、信用脉冲转负，企业存款定期化；</li>
+<li>银行净息差下降与不良生成率上升同时发生。</li>
+</ul>
+</div>
+<div class="callout co-falsify"><div class="co-label">悲观证伪条件</div>
+<ul>
+<li>出口在7—8月仍超过10%；</li>
+<li>PMI连续三个月高于50；</li>
+<li>房地产销售同比回正且到位资金同步改善；</li>
+<li>社零超过3%、核心CPI上行；</li>
+<li>财政支出进入居民和企业现金流，并带动M1超过5%。</li>
+</ul>
+</div>
+<div class="callout co-asset"><div class="co-label">资产映射</div><p>提高黄金、非人民币资产、现金、短久期资产和尾部对冲；红利板块只保留现金流覆盖分红者；降低高估值成长、出口链、中游制造、银行和地产。资源品需要二次筛选：供给约束型资源可保留，依赖全球制造需求的高贝塔品种应减仓。</p></div>
+
+<div class="callout co-cc"><div class="co-label">CC 反共识注入：悲观概率可能高达35%</div>
+<p>主流框架往往给予政策托底较高权重，却容易低估三个不对称特征。</p>
+<p>其一，抢出口形成“用上半年增长换下半年订单”的时间错配，其回撤可能比线性模型更快。其二，房地产负反馈已经从开发商利润问题扩展到居民抵押品、地方土地收入和银行贷款需求，政策只能逐层阻断，难以一次逆转。其三，利率和准备金工具主要改善资金供给，却不能强制私人部门形成有效借贷需求。</p>
+<p>因此，CC审计不主张把悲观情景直接当作基线，而是主张为其分配更高概率和更高对冲预算。悲观概率被低估的真正成本不是GDP预测误差0.2个百分点，而是相关资产在压力情景下同时下跌、流动性下降和波动率急升。</p>
+</div>
+
+<h4 class="sec anchor" id="s7-4"><a class="pin" href="#s7-4">#</a>7.4　概率调整：主流框架与CC审计</h4>
+<div class="tbl"><table style="min-width:560px">
+<thead><tr><th>框架</th><th>基线</th><th>乐观</th><th>悲观</th><th>核心含义</th></tr></thead>
+<tbody>
+<tr><td><b class="rowhead">主流概率</b></td><td class="num">60%</td><td class="num">25%</td><td class="num">15%</td><td>政策托底有效，出口和地产仅温和回落</td></tr>
+<tr><td><b class="rowhead">CC审计建议</b></td><td class="num">50%</td><td class="num">15%</td><td class="num">35%</td><td>下调G2突破和消费自发复苏概率，上调地产、出口和<span class="trunc">…※</span></td></tr>
+</tbody>
+</table></div>
+<p>从概率加权增长看，两套框架的全年GDP中枢差异未必巨大；真正差异在于分布左尾。CC框架要求组合不能只围绕均值配置，而应考虑资产在悲观情景中的相关性突变。</p>
+<p>概率调整采用滚动规则，而不是固定到年底：</p>
+<ul class="plain">
+<li>7—8月出口仍超过10%，悲观概率下调5个百分点，基线概率相应上调；</li>
+<li>PMI连续两月低于48，悲观概率上调10个百分点；</li>
+<li>G2达成可执行的关税冻结，乐观概率上调10个百分点；</li>
+<li>Q3社零超过3%、房地产销售回正、M1超过5%三项同时出现，乐观概率再上调10个百分点；</li>
+<li>地产销售降幅扩大、出口转负和信用脉冲转负三项同时发生，悲观概率上调至45%以上。</li>
+</ul>
+
+<h3 class="ch anchor" id="ch8"><a class="pin" href="#ch8">#</a>第8章　反证指标与跟踪清单</h3>
+<p>宏观报告最大的风险不是预测错误，而是预测错误后仍不断寻找理由维持原结论。本章建立22项可证伪指标。每项指标都对应一个明确观点：条件触发后必须调整概率、行业权重或风险预算，不能只在文字中解释。</p>
+
+<h4 class="sec anchor" id="s8-1"><a class="pin" href="#s8-1">#</a>8.1　五个一级反证指标</h4>
+
+<div class="ind primary"><div class="i-no">01</div><div>
+<div class="i-title">7—8月出口同比仍高于10%</div>
+<div class="i-body">这将证伪“抢出口在三季度快速回撤”的判断。若新出口订单、出口交货值和港口吞吐同步改善，应将悲观概率至少下调5个百分点，提高优质出口链配置；若只有海关金额高增而订单下降，则仍需警惕价格与交付时点扰动。</div>
+</div></div>
+<div class="ind primary"><div class="i-no">02</div><div>
+<div class="i-title">Q3 GDP同比高于5.0%</div>
+<div class="i-body">这将直接证伪当前三情景的增长中枢，说明二季度4.3%可能是短期波动而非趋势下行。需将全年预测上调至接近5%，同时降低现金和尾部对冲，提高消费、银行和周期资产权重。</div>
+</div></div>
+<div class="ind primary"><div class="i-no">03</div><div>
+<div class="i-title">下半年CPI触及2.5%以上</div>
+<div class="i-body">这将证伪“终端需求弱、通胀仅集中于PPI”的判断。若核心CPI与服务价格同步上升，说明不是食品能源噪声，应减少纯久期和高估值防御资产，重新评估消费定价权及政策利率路径。</div>
+</div></div>
+<div class="ind primary"><div class="i-no">04</div><div>
+<div class="i-title">央行下半年累计降息超过25bp，同时人民币不弱于7.35</div>
+<div class="i-body">这将证伪货币政策受汇率和净息差强约束的判断，意味着资本流动、外汇供求或政策可信度比预期更强。届时应提高国内利率敏感资产权重，但仍需检查银行净息差是否因降息进一步下降。</div>
+</div></div>
+<div class="ind primary"><div class="i-no">05</div><div>
+<div class="i-title">G2峰会形成实质性关税突破</div>
+<div class="i-body">“实质性”必须包含关税冻结、税率下调、明确豁免清单或具有日期的谈判安排。若触发，关税升级风险不再是基线假设，出口和成长资产风险溢价应下降；只有原则性声明不构成证伪。</div>
+</div></div>
+
+<h4 class="sec anchor" id="s8-2"><a class="pin" href="#s8-2">#</a>8.2　二级跟踪指标：每两项组成一个验证组</h4>
+
+<div class="grp">A组：房地产与信用活化</div>
+<div class="ind"><div class="i-no">06</div><div>
+<div class="i-title">房地产销售在Q3同比回正</div>
+<div class="i-body">若销售面积和金额同时回正，并持续至少两个月，证伪“地产继续单向拖累”的判断；如果仅因低基数或个别一线城市拉动，则不足以确认全国反转。</div>
+</div></div>
+<div class="ind"><div class="i-no">07</div><div>
+<div class="i-title">M1增速回升至5%以上</div>
+<div class="i-body">若同时伴随企业活期存款、经营性贷款和民间投资改善，证伪“资金停留于金融体系、信用需求塌缩”的判断；若M1改善仅来自口径或财政资金暂存，不调整情景。</div>
+</div></div>
+
+<div class="grp">B组：就业透明度与制造景气</div>
+<div class="ind"><div class="i-no">08</div><div>
+<div class="i-title">青年失业率恢复稳定、可比公布，且连续两月改善</div>
+<div class="i-body">该指标首先验证信息质量，其次验证消费基础。若数据稳定公布并显著下降，同时招聘、工资和工时改善，证伪就业预期持续恶化的判断；单纯恢复发布而没有可比改善，不构成经济证伪。</div>
+</div></div>
+<div class="ind"><div class="i-no">09</div><div>
+<div class="i-title">制造业PMI连续三个月高于50</div>
+<div class="i-body">若新订单、就业和原材料采购同步处于扩张区间，证伪“K型分化继续恶化”和悲观PMI路径；只有生产指数高于50而订单、就业低于50，不构成全面反转。</div>
+</div></div>
+
+<div class="grp">C组：汽车与大众消费</div>
+<div class="ind"><div class="i-no">10</div><div>
+<div class="i-title">汽车销售降幅收窄至5%以内</div>
+<div class="i-body">若改善来自非补贴终端销量、库存下降和经销商折扣收窄，则证伪耐用品需求持续下滑；若依赖厂家压库或补贴透支，仍需保留谨慎判断。</div>
+</div></div>
+<div class="ind"><div class="i-no">11</div><div>
+<div class="i-title">社零连续两月增长3%以上</div>
+<div class="i-body">若餐饮、服务和非补贴商品共同改善，证伪中端消费全面低配逻辑；若仅家电、汽车等补贴品类增长，则只提高相关行业战术权重。</div>
+</div></div>
+
+<div class="grp">D组：通胀结构</div>
+<div class="ind"><div class="i-no">12</div><div>
+<div class="i-title">核心CPI升至1.8%以上，服务价格升至2%以上</div>
+<div class="i-body">两项同时发生，说明居民需求与工资价格循环开始形成，证伪“CPI温和、需求不足”的基线，应提高消费和服务业配置。</div>
+</div></div>
+<div class="ind"><div class="i-no">13</div><div>
+<div class="i-title">PPI降至1%以下或重新转负</div>
+<div class="i-body">这将证伪上游资源作为普遍PPI受益端的逻辑。若同时出现库存上升、现货转贴水，应削减资源仓；若只是能源基数扰动而工业金属仍强，则进行内部轮换。</div>
+</div></div>
+
+<div class="grp">E组：剪刀差与企业利润</div>
+<div class="ind"><div class="i-no">14</div><div>
+<div class="i-title">PPI—CPI剪刀差收窄至1个百分点以内</div>
+<div class="i-body">这将证伪中游制造必然受损的判断。若中游出厂价、毛利率和现金流同步改善，可从低配转为中性。</div>
+</div></div>
+<div class="ind"><div class="i-no">15</div><div>
+<div class="i-title">规模以上工业企业利润连续两月增长10%以上</div>
+<div class="i-body">若利润改善扩散至私营企业和中下游行业，证伪盈利仅集中于上游与少数高技术行业的K型判断；若主要由油气、金融或低基数贡献，则不视为全面扩散。</div>
+</div></div>
+
+<div class="grp">F组：民间投资与地产前端</div>
+<div class="ind"><div class="i-no">16</div><div>
+<div class="i-title">民间固定资产投资增速升至3%以上</div>
+<div class="i-body">若扣除房地产后仍改善，并伴随设备订单和招聘回升，证伪私人部门缺乏资本开支意愿的判断。</div>
+</div></div>
+<div class="ind"><div class="i-no">17</div><div>
+<div class="i-title">居民中长期贷款连续三个月同比多增</div>
+<div class="i-body">若与新房、二手房成交同步改善，证伪居民去杠杆和住房信用需求持续下降的判断；若贷款增加来自存量置换或消费贷包装，则不构成证伪。</div>
+</div></div>
+
+<div class="grp">G组：地产供给与银行盈利</div>
+<div class="ind"><div class="i-no">18</div><div>
+<div class="i-title">土地成交、新开工和开发商到位资金降幅同时收窄至个位数</div>
+<div class="i-body">三项同时发生才说明地产由销售端向投资端传导，证伪下半年投资继续下降5%—8%的假设。单独土地成交反弹可能只是地方集中供地。</div>
+</div></div>
+<div class="ind"><div class="i-no">19</div><div>
+<div class="i-title">上市银行净息差环比企稳或上升5bp以上</div>
+<div class="i-body">若贷款需求、资产质量和手续费收入也改善，证伪银行低配逻辑；若净息差改善只来自一次性存款重定价，则只能降低低配幅度。</div>
+</div></div>
+
+<div class="grp">H组：外汇储备与黄金</div>
+<div class="ind"><div class="i-no">20</div><div>
+<div class="i-title">央行连续两个季度停止增持黄金，且黄金占储备比重下降</div>
+<div class="i-body">若同时人民币稳定、外汇储备上升、全球央行购金减弱，证伪“央行购金与储备多元化持续强化”的战术逻辑，应降低黄金超配，而不是取消长期保险仓。</div>
+</div></div>
+<div class="ind"><div class="i-no">21</div><div>
+<div class="i-title">人民币在降息环境下仍稳定升值，且跨境资金连续净流入</div>
+<div class="i-body">这将证伪“不可能三角约束较强”及非人民币资产必须持续超配的判断。若升值只来自行政性稳汇率或美元普遍下跌，则需结合实际利差判断。</div>
+</div></div>
+
+<div class="grp">I组：科技产业兑现总闸门</div>
+<div class="ind"><div class="i-no">22</div><div>
+<div class="i-title">HBM与Robotaxi从订单叙事进入现金流验证</div>
+<div class="i-body">该指标设置双重门槛：HBM综合良率超过50%、通过两家以上客户验证并实现批量收入；Robotaxi付费车队连续两个季度扩张、去安全员范围扩大且单车贡献利润转正。任一赛道未达到门槛，其估值都只能按风险投资或主题交易处理。若HBM良率长期低于35%，或Robotaxi事故率、补贴依赖和单位亏损上升，则证伪相应国产替代或商业化路径，应退出高估值环节。</div>
+</div></div>
+
+<h4 class="sec anchor" id="s8-3"><a class="pin" href="#s8-3">#</a>8.3　执行频率与概率调整纪律</h4>
+<p>22项指标应按三种频率更新：</p>
+<ul class="plain">
+<li><b>周度：</b>商品库存与现货升贴水、地产成交、汽车零售、港口吞吐、人民币汇率、黄金和股指波动率；</li>
+<li><b>月度：</b>出口、PMI、CPI/PPI、社零、M1、贷款、房地产、汽车、工业利润和就业；</li>
+<li><b>季度或事件驱动：</b>GDP、银行净息差、HBM良率与客户验证、Robotaxi单位经济模型、G2峰会和财政预算执行。</li>
+</ul>
+<p>每月更新时使用红、黄、绿三色：</p>
+<ul class="plain">
+<li><b style="color:var(--bull)">绿色</b>表示支持原判断；</li>
+<li><b style="color:var(--amber)">黄色</b>表示方向不清或数据口径受扰；</li>
+<li><b style="color:var(--bear)">红色</b>表示证伪条件已经触发。</li>
+</ul>
+<p>同一情景若出现两个一级红灯，或一个一级红灯加同一链条两个二级红灯，必须调整情景概率至少5个百分点；出现三个一级红灯，应重写情景而不是微调措辞。任何行业组合触发自身证伪条件后，应在下一次再平衡中降低风险预算，不得以“长期逻辑未变”为由忽略短期现金流、良率、订单或资产负债表恶化。</p>
+<div class="thesis">本报告的最终结论因此不是静态的“看多什么、看空什么”，而是一套可被现实推翻的条件系统：在基线情景下持有黄金、资源、红利和结构性科技；在乐观证据累积时增加消费、出口和金融；在地产、出口与信用共振恶化时，迅速提高现金、非人民币资产和尾部保护。只有把反证条件写在投资之前，宏观判断才能真正进入L3配置层。</div>
+
+<!-- ============================================================ -->
+<!-- 技术说明 -->
+<!-- ============================================================ -->
+<div class="colophon anchor" id="colophon">
+  <div class="c-title">技术说明</div>
+  <p>本报告由 Hermes Agent (Super Joey) 调度生成</p>
+  <p>正向分析: Codex CLI (OpenAI gpt-5.6-sol, medium reasoning)</p>
+  <p>反共识验证: Claude Code CLI (Anthropic claude-fable-5)</p>
+  <p>数据截止: 2026-07-23 · 国家统计局 · Wind · Bloomberg</p>
+  <div class="end">— END —</div>
+  <div class="conv-note">
+    <b>网页转换附注</b>（非原报告内容）：本页面由 49 页 PDF 版《2026 上半年中国宏观经济深度报告 V2》(20260723) 完整转换而来。① 原 PDF 中第 1-2 章正文重复排版了两次，网页已去重，仅保留一份；② 原 PDF 若干表格（四条投资主线、总量仪表盘部分单元格、表6-1 L3投资矩阵、7.4 概率表）存在单元格文字溢出截断或互相遮挡，网页按可辨识内容如实还原，无法辨识的截断处以“…※”标注，未作任何补写；③ 第 8 章 22 项反证指标在原 PDF 中因排版缺陷被压缩为窄列，网页已恢复为正常段落；④ 原 PDF 中的生成过程调试信息（如 tokens 用量）未收录。正文文字内容未经删改。
+  </div>
+</div>
+
+</main>
+</div><!-- /main-col -->
+</div><!-- /layout -->
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),
+      toTop=document.getElementById('toTop'),
+      sidebar=document.getElementById('sidebar'),
+      toggle=document.getElementById('tocToggle'),
+      links=[].slice.call(document.querySelectorAll('.toc a')),
+      targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))}).filter(Boolean);
+
+  function onScroll(){
+    var h=document.documentElement,
+        max=h.scrollHeight-h.clientHeight,
+        y=h.scrollTop||document.body.scrollTop;
+    bar.style.width=(max>0?(y/max*100):0)+'%';
+    toTop.classList.toggle('show',y>600);
+    var current=targets[0];
+    for(var i=0;i<targets.length;i++){
+      if(targets[i].getBoundingClientRect().top<=120) current=targets[i];
+    }
+    links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+current.id)});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  toggle.addEventListener('click',function(){sidebar.classList.toggle('open')});
+  links.forEach(function(a){a.addEventListener('click',function(){sidebar.classList.remove('open')})});
+  document.addEventListener('click',function(e){
+    if(window.innerWidth<=1080 && sidebar.classList.contains('open') &&
+       !sidebar.contains(e.target) && e.target!==toggle) sidebar.classList.remove('open');
+  });
+  toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+</script>
+</body>
+</html>
