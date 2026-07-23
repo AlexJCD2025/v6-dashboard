@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Super Joey 量化框架报告 V3 (V7) | 2026-07-23</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:oklch(0.984 0.004 240);--surface:#fff;--surface-2:oklch(0.968 0.005 240);--line:oklch(0.90 0.008 240);--line-soft:oklch(0.935 0.006 240);--ink:oklch(0.26 0.012 255);--ink-2:oklch(0.44 0.013 255);--ink-3:oklch(0.54 0.013 255);--accent:oklch(0.50 0.115 220);--bull:oklch(0.50 0.14 150);--bull-bg:oklch(0.945 0.045 150);--bear:oklch(0.52 0.19 27);--bear-bg:oklch(0.952 0.04 27);--mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace}
+body{font-family:'Inter',-apple-system,'PingFang SC',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;background-image:radial-gradient(oklch(0.91 0.006 240) 0.6px,transparent 0.6px);background-size:22px 22px}
+.header{background:rgba(255,255,255,0.94);border-bottom:1px solid var(--line);padding:18px 24px;position:sticky;top:0;z-index:100}
+.header h1{font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--ink);display:inline}
+.header .meta{float:right;font-size:12px;color:var(--ink-3);line-height:28px;font-family:var(--mono)}
+.tabs{display:flex;gap:0;background:var(--surface);border-bottom:1px solid var(--line);padding:0 12px;position:sticky;top:62px;z-index:99;overflow-x:auto}
+.tab{padding:11px 16px;font-size:13px;color:var(--ink-3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--ink);background:var(--surface-2)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500}
+.content{max-width:1080px;margin:0 auto;padding:22px 24px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.sec-title{font-size:13px;color:var(--ink-3);margin:24px 0 12px;font-weight:500;letter-spacing:0}
+.section{margin-bottom:20px}
+.mb-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.mb-time{font-size:11px;color:var(--ink-3);margin-bottom:8px;font-family:var(--mono)}
+.mb-body{font-size:14px;line-height:1.7;color:var(--ink);white-space:pre-wrap;font-family:'Inter',-apple-system,sans-serif;overflow-x:hidden}
+.stat-row-sm{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.stat-box{background:var(--surface);border:1px solid var(--line-soft);border-radius:10px;padding:12px 18px;text-align:center;min-width:84px}
+.stat-num{font-size:22px;font-weight:600;color:var(--accent);font-family:var(--mono)}
+.stat-lbl{font-size:11px;color:var(--ink-3);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--surface-2);padding:11px 16px;text-align:left;color:var(--ink-3);font-size:12px;font-weight:500;border-bottom:1px solid var(--line)}
+td{padding:12px 16px;border-bottom:1px solid var(--line-soft);color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:var(--surface-2)}
+.reco-table td:first-child,.reco-table th:first-child{text-align:center;width:34px;color:var(--ink-3);font-family:var(--mono)}
+.reco-table td:nth-child(3){text-align:center;font-weight:600;color:var(--accent);font-family:var(--mono)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.kpi-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:16px 18px;text-align:center}
+.kpi-num{font-size:26px;font-weight:600;color:var(--ink);font-family:var(--mono);letter-spacing:-0.01em}
+.kpi-lbl{font-size:12px;color:var(--ink-3);margin-top:6px}
+.kpi-sub{font-size:11px;color:var(--ink-3);margin-top:3px;font-family:var(--mono)}
+.chart-box{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:18px;margin-bottom:16px}
+.chart-wrap{position:relative;width:100%;height:200px}
+.error-msg{color:var(--ink-3);font-size:14px;padding:24px;text-align:center}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:500;margin:1px;font-family:var(--mono)}
+.badge-bullish{background:var(--bull-bg);color:var(--bull)}
+.badge-bearish{background:var(--bear-bg);color:var(--bear)}
+.badge-neutral{background:var(--surface-2);color:var(--ink-2)}
+.footer{border-top:1px solid var(--line-soft);padding:18px 24px;font-size:12px;color:var(--ink-3);text-align:center;font-family:var(--mono)}
+.footer-note{font-size:10px;color:var(--ink-3);text-align:right;padding:4px 0;margin-top:-8px}
+/* 概览卡片 */
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.ov-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:16px 18px}
+.ov-title{font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:8px}
+.ov-value{font-size:18px;color:var(--ink);font-weight:600;margin-bottom:3px;font-family:var(--mono);letter-spacing:-0.01em}
+.ov-sub{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 Super Joey 量化框架报告 V3 (V7)</h1>
+  <span class="meta">2026年07月23日 Thursday · 聚合于 22:31</span>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 总览</div>
+  <div class="tab" data-tab="v7" onclick="switchTab('v7')">📈 V7因子评分</div>
+  <div class="tab" data-tab="hk" onclick="switchTab('hk')">🇭🇰 港股</div>
+  <div class="tab" data-tab="sector" onclick="switchTab('sector')">🔄 行业轮动</div>
+  <div class="tab" data-tab="regime" onclick="switchTab('regime')">📉 Regime</div>
+  <div class="tab" data-tab="macro" onclick="switchTab('macro')">🌐 宏观</div>
+  <div class="tab" data-tab="reco" onclick="switchTab('reco')">🏆 推荐</div>
+  <div class="tab" data-tab="consensus" onclick="switchTab('consensus')">🤝 共识</div>
+  <div class="tab" data-tab="closing" onclick="switchTab('closing')">📰 收盘日报</div>
+  <div class="tab" data-tab="v8scoring" onclick="switchTab('v8scoring')">🔬 V8评分</div>
+  <div class="tab" data-tab="v9scoring" onclick="switchTab('v9scoring')">🚀 V9评分</div>
+  <div class="tab" data-tab="v6history" onclick="switchTab('v6history')">📈 V6历史趋势</div>
+</div>
+
+<div class="content">
+
+<!-- Tab 1: 总览 -->
+<div id="tab-dashboard" class="tab-content active">
+  <div class="sec-title">🔭 全局概览</div>
+  <div class="overview-grid"><div class="ov-card"
+  <div class="ov-title">📈 V7因子评分</div>
+  <div class="ov-value">数据已嵌入</div>
+  <div class="ov-sub">见下方KPI卡片</div>
+</div><div class="ov-card" style="border-left:3px solid #1a7f37">
+  <div class="ov-title">🇭🇰 港股评分</div>
+  <div class="ov-value">Top1: 中国有色矿业</div>
+  <div class="ov-sub">07-23 16:37</div>
+</div><div class="ov-card" style="border-left:3px solid #9a6700">
+  <div class="ov-title">🔄 行业轮动</div>
+  <div class="ov-value">领涨: —</div>
+  <div class="ov-sub">领跌: —</div>
+</div><div class="ov-card" style="border-left:3px solid #cf222e">
+  <div class="ov-title">📉 Regime</div>
+  <div class="ov-value">—</div>
+  <div class="ov-sub">MC: 1 | HMM: 0</div>
+</div><div class="ov-card" style="border-left:3px solid #656d76">
+  <div class="ov-title">🔬 Regime（V8 情绪）</div>
+  <div class="ov-value" style="color:#656d76">中性 (conf=0.20)</div>
+  <div class="ov-sub">板块偏好: 暂无</div>
+</div><div class="ov-card" style="border-left:3px solid #8250df">
+  <div class="ov-title">🌐 宏观</div>
+  <div class="ov-value">CPI 3.1% | PPI 3.1%</div>
+  <div class="ov-sub">—</div>
+</div><div class="ov-card" style="border-left:3px solid #656d76">
+  <div class="ov-title">📊 情绪</div>
+  <div class="ov-value">—</div>
+  <div class="ov-sub">涨跌比: 154:0</div>
+</div></div>
+  <div class="kpi-grid" id="kpi-dashboard">
+    <div class="kpi-card"><div class="kpi-num" id="kpi-v7-avg">—</div><div class="kpi-lbl">V7 评分均值</div><div class="kpi-sub">今日 Top 30</div></div>
+    <div class="kpi-card"><div class="kpi-num" id="kpi-v7-top">—</div><div class="kpi-lbl">V7 Top 评分</div><div class="kpi-sub">最高分</div></div>
+    <div class="kpi-card"><div class="kpi-num" id="kpi-agent-notes">—</div><div class="kpi-lbl">Agent 笔记</div><div class="kpi-sub">今日活跃</div></div>
+    <div class="kpi-card"><div class="kpi-num" id="kpi-reco-count">—</div><div class="kpi-lbl">今日推荐</div><div class="kpi-sub">持仓标的</div></div>
+  </div>
+  <div class="chart-box">
+    <div class="sec-title">📈 V7 因子评分趋势 (近7日)</div>
+    <div class="chart-wrap"><canvas id="chart-v7-trend"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <div class="sec-title">🏆 V7 Top 10</div>
+    <table id="table-v7top"><thead><tr><th>#</th><th>标的</th><th>名称</th><th>评分</th><th>V7</th><th>信号</th></tr></thead><tbody><tr><td colspan="6" class="error-msg">加载中...</td></tr></tbody></table>
+  </div>
+  <div class="chart-box">
+    <div class="sec-title">📈 V6 全市场 fused_score 历史趋势 (0天)</div>
+    <div class="chart-wrap"><canvas id="chart-v6-history"></canvas></div>
+  </div>
+</div>
+
+<!-- Tab 2: V7评分 -->
+<div id="tab-v7" class="tab-content">
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-num" id="v7-total">—</div><div class="kpi-lbl">全市场 V7 评分</div></div>
+    <div class="kpi-card"><div class="kpi-num" id="v7-bullish">—</div><div class="kpi-lbl">看多标的</div></div>
+    <div class="kpi-card"><div class="kpi-num" id="v7-avg-all">—</div><div class="kpi-lbl">全市场均值</div></div>
+  </div>
+  <div class="chart-box">
+    <div class="sec-title">📊 评分分布</div>
+    <div class="chart-wrap"><canvas id="chart-v7-dist"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <div class="sec-title">🏆 V7 全排名 Top 20</div>
+    <table id="table-v7all"><thead><tr><th>#</th><th>标的</th><th>名称</th><th>评分</th><th>V7</th><th>Vest</th><th>Panda</th><th>信号</th></tr></thead><tbody><tr><td colspan="8" class="error-msg">加载中...</td></tr></tbody></table>
+  </div>
+</div>
+
+<!-- Tab 3: 港股评分 -->
+<div id="tab-hk" class="tab-content">
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num">5</div><div class="kpi-lbl">Top 5 港股评分</div></div>
+</div>
+<div class="chart-box">
+  <div class="sec-title">🏆 港股评分 Top 5</div>
+  <table><thead><tr><th>#</th><th>代码</th><th>名称</th><th>评分</th><th>信号</th></tr></thead><tbody><tr><td style='text-align:center'>1</td><td style='font-family:monospace;color:#0969da'></td><td>中国有色矿业</td><td style='text-align:center;font-weight:700;color:#8250df'>—</td><td>—</td></tr><tr><td style='text-align:center'>2</td><td style='font-family:monospace;color:#0969da'></td><td>五矿资源</td><td style='text-align:center;font-weight:700;color:#8250df'>—</td><td>—</td></tr><tr><td style='text-align:center'>3</td><td style='font-family:monospace;color:#0969da'></td><td>金斯瑞生物科技</td><td style='text-align:center;font-weight:700;color:#8250df'>—</td><td>—</td></tr><tr><td style='text-align:center'>4</td><td style='font-family:monospace;color:#0969da'></td><td>龙丰集团</td><td style='text-align:center;font-weight:700;color:#8250df'>—</td><td>—</td></tr><tr><td style='text-align:center'>5</td><td style='font-family:monospace;color:#0969da'></td><td>理文造纸</td><td style='text-align:center;font-weight:700;color:#8250df'>—</td><td>—</td></tr></tbody></table>
+</div>
+<div class="footer-note">报告时间: 07-23 16:37</div></div>
+
+<!-- Tab 4: 行业轮动 -->
+<div id="tab-sector" class="tab-content">
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num">—</div><div class="kpi-lbl">覆盖行业</div></div>
+  <div class="kpi-card"><div class="kpi-num">0</div><div class="kpi-lbl">领涨行业</div></div>
+  <div class="kpi-card"><div class="kpi-num">0</div><div class="kpi-lbl">领跌行业</div></div>
+</div>
+<div class="chart-box">
+  <div class="sec-title">🟢 领涨行业 Top 5</div>
+  <table><thead><tr><th>#</th><th>行业</th><th>评分/指标</th></tr></thead><tbody><tr><td colspan=3 class='error-msg'>暂无数据</td></tr></tbody></table>
+</div>
+<div class="chart-box">
+  <div class="sec-title">🔴 领跌行业 Top 5</div>
+  <table><thead><tr><th>#</th><th>行业</th><th>评分/指标</th></tr></thead><tbody><tr><td colspan=3 class='error-msg'>暂无数据</td></tr></tbody></table>
+</div>
+<div class="footer-note">报告时间: 07-23 20:42</div></div>
+
+<!-- Tab 5: Regime -->
+<div id="tab-regime" class="tab-content">
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num">⚪ —</div><div class="kpi-lbl">融合 Regime</div></div>
+  <div class="kpi-card"><div class="kpi-num" style="font-size:18px">1</div><div class="kpi-lbl">MC状态</div></div>
+  <div class="kpi-card"><div class="kpi-num" style="font-size:18px">0</div><div class="kpi-lbl">HMM状态</div></div>
+</div>
+<div class="section">
+  <div class="mb-card">
+    <div class="sec-title">📋 Regime 详情</div>
+    <div style="font-size:13px;color:#656d76;line-height:1.8">
+      MC Markov Chain: 1<br>
+      HMM 隐马尔可夫: 0<br>
+      融合判断: —<br>
+      <span class="mb-time">数据源: v6_fusion_20260723_v7.csv</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- Tab 6: 宏观 -->
+<div id="tab-macro" class="tab-content">
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num" style="color:#1a7f37">3.1%</div><div class="kpi-lbl">CPI</div></div>
+  <div class="kpi-card"><div class="kpi-num" style="color:#cf222e">3.1%</div><div class="kpi-lbl">PPI</div></div>
+  <div class="kpi-card"><div class="kpi-num" style="color:#9a6700">50.3%</div><div class="kpi-lbl">PMI</div></div>
+  <div class="kpi-card"><div class="kpi-num">8.0%</div><div class="kpi-lbl">M2</div></div>
+</div>
+<div class="section">
+  <div class="mb-card">
+    <div class="sec-title">📊 综合判断</div>
+    <div style="font-size:15px;color:#24292f">—</div>
+    <div class="mb-time" style="margin-top:8px">来源: macro_report_20260723.html</div>
+  </div>
+</div></div>
+
+<!-- Tab 7: 推荐 -->
+<div id="tab-reco" class="tab-content"><div class="section"><div class="error-msg">今日暂无推荐数据</div></div></div>
+
+<!-- Tab 8: 共识 -->
+<div id="tab-consensus" class="tab-content"><div class="section"><h3 class="sec-title">✅ 共识标的 Top 0</h3><table class="cons-table"><tr><th>#</th><th>标的</th><th>系统</th><th>共识强度</th><th>系统笔记</th></tr></table></div><div class="section"><h3 class="sec-title">⚠️ 分歧标的 Top 0</h3><table class="cons-table"><tr><th>#</th><th>标的</th><th>系统</th><th>分歧程度</th><th>系统笔记</th></tr></table></div></div>
+
+<!-- Tab 9: 收盘日报 -->
+<div id="tab-closing" class="tab-content"><div class="section"><div class="error-msg">📰 各市场收盘日报即将上线</div></div></div>
+
+<!-- Tab 10: V8评分+板块 -->
+<div id="tab-v8scoring" class="tab-content">
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#656d76">😐 中性</div>
+    <div class="kpi-lbl">V8 情绪体制</div>
+    <div class="kpi-sub">置信度: 0.20</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">20.41</div>
+    <div class="kpi-lbl">V8 全市场均值</div>
+    <div class="kpi-sub">标准差: 5.41</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#1a7f37">30.89</div>
+    <div class="kpi-lbl">最高分</div>
+    <div class="kpi-sub">最低: 0.0</div>
+  </div>
+</div>
+<div class="chart-box">
+  <div class="sec-title">🎯 板块偏好（中性 体制）</div>
+  <div class="kpi-grid"><div class="error-msg">暂无V8数据</div></div>
+</div>
+<div class="chart-box">
+  <div class="sec-title">🏆 V8 评分 Top 20</div>
+  <table>
+    <thead><tr><th>#</th><th>代码</th><th>名称</th><th>行业</th><th>V8分</th><th>置信度</th><th>主因子</th></tr></thead>
+    <tbody><tr><td style='text-align:center'>1</td><td style='font-family:monospace;color:#0969da'>002807.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>30.89</td><td>0.72</td><td>—</td></tr><tr><td style='text-align:center'>2</td><td style='font-family:monospace;color:#0969da'>002200.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.98</td><td>0.70</td><td>—</td></tr><tr><td style='text-align:center'>3</td><td style='font-family:monospace;color:#0969da'>600782.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.53</td><td>0.68</td><td>—</td></tr><tr><td style='text-align:center'>4</td><td style='font-family:monospace;color:#0969da'>603395.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.48</td><td>0.68</td><td>—</td></tr><tr><td style='text-align:center'>5</td><td style='font-family:monospace;color:#0969da'>688121.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.43</td><td>0.68</td><td>—</td></tr><tr><td style='text-align:center'>6</td><td style='font-family:monospace;color:#0969da'>002670.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.33</td><td>0.68</td><td>—</td></tr><tr><td style='text-align:center'>7</td><td style='font-family:monospace;color:#0969da'>603136.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.25</td><td>0.68</td><td>—</td></tr><tr><td style='text-align:center'>8</td><td style='font-family:monospace;color:#0969da'>000736.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>29.02</td><td>0.67</td><td>—</td></tr><tr><td style='text-align:center'>9</td><td style='font-family:monospace;color:#0969da'>001222.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.68</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>10</td><td style='font-family:monospace;color:#0969da'>601595.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.67</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>11</td><td style='font-family:monospace;color:#0969da'>301073.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.64</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>12</td><td style='font-family:monospace;color:#0969da'>600009.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.63</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>13</td><td style='font-family:monospace;color:#0969da'>301535.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.60</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>14</td><td style='font-family:monospace;color:#0969da'>600793.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.58</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>15</td><td style='font-family:monospace;color:#0969da'>000558.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.52</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>16</td><td style='font-family:monospace;color:#0969da'>000798.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.51</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>17</td><td style='font-family:monospace;color:#0969da'>002094.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.50</td><td>0.66</td><td>—</td></tr><tr><td style='text-align:center'>18</td><td style='font-family:monospace;color:#0969da'>002075.SZ</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.49</td><td>0.65</td><td>—</td></tr><tr><td style='text-align:center'>19</td><td style='font-family:monospace;color:#0969da'>603086.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.46</td><td>0.65</td><td>—</td></tr><tr><td style='text-align:center'>20</td><td style='font-family:monospace;color:#0969da'>601606.SH</td><td>—</td><td>—</td><td style='font-weight:700;color:#1a7f37'>28.43</td><td>0.65</td><td>—</td></tr></tbody>
+  </table>
+</div></div>
+
+<!-- Tab 11: V9评分 -->
+<div id="tab-v9scoring" class="tab-content"><div class="section"><div class="error-msg">暂无V9数据</div></div></div>
+
+<!-- Tab 12: V6历史趋势 -->
+<div id="tab-v6history" class="tab-content"><div class="section"><div class="error-msg">暂无V6历史数据</div></div></div>
+
+</div>
+
+<div class="footer">
+  Super Joey 量化框架报告 V3 (V7) | 数据: V7因子评分 + V8/V9情绪评分 + 港股评分 + 行业轮动 + Regime + 宏观 + 情绪 + 共识 + 收盘日报
+  | <span id="footer-time">22:31</span>
+  <div class="footer-note">数据日期: 2026-07-23</div>
+</div>
+
+<script>
+// ── 服务端嵌入的 V7 数据（构建时从 PostgREST / CSV 拉取）──
+const EMBEDDED_V7 = [{"ts_code": "300638.SZ", "name": "广和通", "industry": "通信设备", "cap_layer": "large", "fused_score": 82.7, "vest_score": 80.4, "panda_score": 66.1, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600729.SH", "name": "重百集团", "industry": "百货", "cap_layer": "mid", "fused_score": 82.4, "vest_score": 81.3, "panda_score": 65.9, "confidence": "low", "signal": "分歧观望", "explain": "原始差15分→归一化差23分 | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "603161.SH", "name": "科华控股", "industry": "汽车配件", "cap_layer": "small", "fused_score": 81.5, "vest_score": 65.2, "panda_score": 85.9, "confidence": "low", "signal": "分歧观望", "explain": "原始差21分→归一化差25分 | cap=small | 权重偏向Panda(50%/50%) | 分歧大(25分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "605155.SH", "name": "西大门", "industry": "家居用品", "cap_layer": "small", "fused_score": 80.7, "vest_score": 64.6, "panda_score": 81.3, "confidence": "low", "signal": "分歧观望", "explain": "原始差17分→归一化差26分 | cap=small | 权重偏向Panda(50%/50%) | 分歧大(26分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "688347.SH", "name": "华虹宏力", "industry": "半导体", "cap_layer": "large", "fused_score": 80.0, "vest_score": 65.0, "panda_score": 77.0, "confidence": "low", "signal": "分歧观望", "explain": "原始差12分→归一化差20分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(20分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600929.SH", "name": "雪天盐业", "industry": "食品", "cap_layer": "mid", "fused_score": 79.9, "vest_score": 63.9, "panda_score": 81.7, "confidence": "low", "signal": "分歧观望", "explain": "原始差18分→归一化差27分 | 权重偏向Panda(50%/50%) | 分歧大(27分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002241.SZ", "name": "歌尔股份", "industry": "元器件", "cap_layer": "large", "fused_score": 79.4, "vest_score": 85.5, "panda_score": 63.5, "confidence": "low", "signal": "分歧观望", "explain": "原始差22分→归一化差27分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(27分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002900.SZ", "name": "哈三联", "industry": "化学制药", "cap_layer": "mid", "fused_score": 79.3, "vest_score": 64.0, "panda_score": 78.4, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差24分 | 权重偏向Panda(50%/50%) | 分歧大(24分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600664.SH", "name": "哈药股份", "industry": "化学制药", "cap_layer": "large", "fused_score": 78.6, "vest_score": 62.9, "panda_score": 81.8, "confidence": "low", "signal": "分歧观望", "explain": "原始差19分→归一化差29分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(29分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "301012.SZ", "name": "扬电科技", "industry": "电气设备", "cap_layer": "mid", "fused_score": 78.3, "vest_score": 63.3, "panda_score": 78.0, "confidence": "low", "signal": "分歧观望", "explain": "原始差15分→归一化差25分 | 权重偏向Panda(50%/50%) | 分歧大(25分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "300770.SZ", "name": "新媒股份", "industry": "影视音像", "cap_layer": "mid", "fused_score": 78.1, "vest_score": 76.0, "panda_score": 63.8, "confidence": "low", "signal": "分歧观望", "explain": "原始差12分→归一化差20分 | 权重偏向Panda(50%/50%) | 分歧大(20分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "603556.SH", "name": "海兴电力", "industry": "电器仪表", "cap_layer": "mid", "fused_score": 78.0, "vest_score": 76.7, "panda_score": 63.5, "confidence": "low", "signal": "分歧观望", "explain": "原始差13分→归一化差22分 | 权重偏向Panda(50%/50%) | 分歧大(22分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "603893.SH", "name": "瑞芯微", "industry": "半导体", "cap_layer": "large", "fused_score": 78.0, "vest_score": 62.4, "panda_score": 82.7, "confidence": "low", "signal": "分歧观望", "explain": "原始差20分→归一化差29分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(29分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "601026.SH", "name": "道生天合", "industry": "电气设备", "cap_layer": "mid", "fused_score": 77.8, "vest_score": 63.3, "panda_score": 76.9, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "601311.SH", "name": "骆驼股份", "industry": "电气设备", "cap_layer": "mid", "fused_score": 77.6, "vest_score": 77.0, "panda_score": 63.1, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "300105.SZ", "name": "龙源技术", "industry": "环境保护", "cap_layer": "mid", "fused_score": 77.6, "vest_score": 63.5, "panda_score": 75.7, "confidence": "low", "signal": "分歧观望", "explain": "原始差12分→归一化差20分 | 权重偏向Panda(50%/50%) | 分歧大(20分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "300795.SZ", "name": "米奥会展", "industry": "文教休闲", "cap_layer": "mid", "fused_score": 77.4, "vest_score": 62.0, "panda_score": 79.7, "confidence": "low", "signal": "分歧观望", "explain": "原始差18分→归一化差30分 | 权重偏向Panda(50%/50%) | 分歧大(30分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600722.SH", "name": "金牛化工", "industry": "化工原料", "cap_layer": "mid", "fused_score": 77.3, "vest_score": 61.9, "panda_score": 79.8, "confidence": "low", "signal": "分歧观望", "explain": "原始差18分→归一化差30分 | 权重偏向Panda(50%/50%) | 分歧大(30分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002841.SZ", "name": "视源股份", "industry": "元器件", "cap_layer": "large", "fused_score": 77.1, "vest_score": 77.5, "panda_score": 62.5, "confidence": "low", "signal": "分歧观望", "explain": "原始差15分→归一化差25分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(25分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600844.SH", "name": "金煤科技", "industry": "化工原料", "cap_layer": "mid", "fused_score": 76.9, "vest_score": 62.5, "panda_score": 77.1, "confidence": "low", "signal": "分歧观望", "explain": "原始差15分→归一化差24分 | 权重偏向Panda(50%/50%) | 分歧大(24分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "603580.SH", "name": "艾艾精工", "industry": "塑料", "cap_layer": "mid", "fused_score": 76.8, "vest_score": 62.3, "panda_score": 77.3, "confidence": "low", "signal": "分歧观望", "explain": "原始差15分→归一化差25分 | 权重偏向Panda(50%/50%) | 分歧大(25分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "000815.SZ", "name": "美利云", "industry": "通信设备", "cap_layer": "mid", "fused_score": 75.2, "vest_score": 60.6, "panda_score": 78.6, "confidence": "low", "signal": "分歧观望", "explain": "原始差18分→归一化差30分 | 权重偏向Panda(50%/50%) | 分歧大(30分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002701.SZ", "name": "奥瑞金", "industry": "广告包装", "cap_layer": "mid", "fused_score": 74.9, "vest_score": 75.3, "panda_score": 61.5, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "001202.SZ", "name": "炬申股份", "industry": "仓储物流", "cap_layer": "small", "fused_score": 74.3, "vest_score": 61.5, "panda_score": 73.8, "confidence": "low", "signal": "分歧观望", "explain": "原始差12分→归一化差21分 | cap=small | 权重偏向Panda(50%/50%) | 分歧大(21分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "000603.SZ", "name": "盛达资源", "industry": "铅锌", "cap_layer": "large", "fused_score": 73.7, "vest_score": 60.8, "panda_score": 74.4, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "688011.SH", "name": "新光光电", "industry": "元器件", "cap_layer": "mid", "fused_score": 73.3, "vest_score": 59.4, "panda_score": 77.7, "confidence": "low", "signal": "分歧观望", "explain": "原始差18分→归一化差31分 | 权重偏向Panda(50%/50%) | 分歧大(31分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002483.SZ", "name": "润邦股份", "industry": "专用机械", "cap_layer": "mid", "fused_score": 73.3, "vest_score": 76.4, "panda_score": 59.8, "confidence": "low", "signal": "分歧观望", "explain": "原始差17分→归一化差28分 | 权重偏向Panda(50%/50%) | 分歧大(28分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600684.SH", "name": "珠江股份", "industry": "区域地产", "cap_layer": "mid", "fused_score": 72.8, "vest_score": 60.3, "panda_score": 73.9, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差23分 | 权重偏向Panda(50%/50%) | 分歧大(23分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "002139.SZ", "name": "拓邦股份", "industry": "元器件", "cap_layer": "mid", "fused_score": 72.5, "vest_score": 72.7, "panda_score": 60.4, "confidence": "low", "signal": "分歧观望", "explain": "原始差12分→归一化差20分 | 权重偏向Panda(50%/50%) | 分歧大(20分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}, {"ts_code": "600143.SH", "name": "金发科技", "industry": "塑料", "cap_layer": "large", "fused_score": 72.0, "vest_score": 59.6, "panda_score": 74.0, "confidence": "low", "signal": "分歧观望", "explain": "原始差14分→归一化差24分 | cap=large | 权重偏向Panda(50%/50%) | 分歧大(24分)", "risk_ok": null, "vest_weight": 0.5, "panda_weight": 0.5, "norm_mode": "z_score"}];
+const EMBEDDED_TREND = [{"date": "2026-07-20", "avg": 80.3}, {"date": "2026-07-21", "avg": 81.3}, {"date": "2026-07-22", "avg": 81.0}, {"date": "2026-07-23", "avg": 77.2}];
+const EMBEDDED_NOTES = 99;
+const EMBEDDED_DIST = {"ge90": 0, "80-89": 5, "70-79": 32, "60-69": 215, "50-59": 2592, "lt50": 2149};
+const EMBEDDED_V6_TREND = [];
+
+const DASHBOARD_API = 'http://localhost:5430';
+const DASHBOARD_DATE = '2026-07-23';
+
+function switchTab(name){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  const tabEl = document.getElementById('tab-'+name);
+  if (tabEl) tabEl.classList.add('active');
+  const tabBtn = document.querySelector('.tab[data-tab="'+name+'"]');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+const API = typeof DASHBOARD_API !== 'undefined' ? DASHBOARD_API : 'http://localhost:5430';
+const REPORT_DATE = typeof DASHBOARD_DATE !== 'undefined' ? DASHBOARD_DATE : new Date().toISOString().slice(0,10);
+
+async function rpc(name, body) {
+  const resp = await fetch(`${API}/rpc/${name}`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body||{})
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.message||resp.status);
+  return data;
+}
+
+let charts = {};
+
+function chart(id, type, labels, datasets, opts) {
+  if (charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type, data:{labels,datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#656d76',font:{size:11},boxWidth:12}}},
+      scales:{
+        x:{ticks:{color:'#8b949e',font:{size:10}},grid:{color:'#d0d7de'}},
+        y:{ticks:{color:'#8b949e',font:{size:10}},grid:{color:'#d0d7de'}}
+      },
+      ...(opts||{})
+    }
+  });
+}
+
+function esc(v) { return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+
+
+function renderV6History() {
+  const data = EMBEDDED_V6_TREND;
+  if (!data || !data.length) return;
+  const labels = data.map(t => t.date.slice(5));
+  const avgs = data.map(t => t.avg);
+  const opts = {
+    scales: {
+      x: { ticks: { maxTicksLimit: 30, color:'#8b949e', font:{size:9} }, grid:{color:'#d0d7de'} },
+      y: { ticks: { color:'#8b949e', font:{size:10} }, grid:{color:'#d0d7de'} }
+    }
+  };
+  chart('chart-v6-history', 'line', labels, [
+    {label:'V6 fused_score 均值', data:avgs, borderColor:'#8250df', backgroundColor:'rgba(130,80,223,0.1)', tension:0.3, fill:true, pointRadius:1.5}
+  ], opts);
+  chart('chart-v6-history-tab', 'line', labels, [
+    {label:'V6 fused_score 均值', data:avgs, borderColor:'#8250df', backgroundColor:'rgba(130,80,223,0.1)', tension:0.3, fill:true, pointRadius:1.5}
+  ], opts);
+}
+
+async function loadV7() {
+  try {
+    // ── 优先使用服务端嵌入的数据（无 API 调用）──
+    let v6 = EMBEDDED_V7;
+    if (!v6 || !v6.length) {
+      // 回退：从 API 动态加载
+      v6 = await rpc('agent_top_scores', {system_name:'v6', trade_date: REPORT_DATE, limit_n:30});
+      if (!v6.length) throw new Error('空数据');
+    }
+
+    const avg = v6.reduce((s,r)=>s+(r.fused_score||0),0)/v6.length;
+    const top = Math.max(...v6.map(r=>r.fused_score||0));
+    document.getElementById('kpi-v7-avg').textContent = avg.toFixed(1);
+    document.getElementById('kpi-v7-top').textContent = top.toFixed(1);
+    document.getElementById('v7-bullish').textContent = v6.filter(r=>String(r.signal||'').includes('看多')).length;
+    document.getElementById('v7-avg-all').textContent = avg.toFixed(1);
+
+    const tbody = document.querySelector('#table-v7top tbody');
+    tbody.innerHTML = v6.slice(0,10).map((r,i)=>`
+      <tr>
+        <td style="text-align:center;color:#656d76">${i+1}</td>
+        <td style="font-family:monospace;color:#0969da;font-weight:600">${esc(r.ts_code)}</td>
+        <td>${esc(r.name||'')}</td>
+        <td style="text-align:center;font-weight:700;color:${Number(r.fused_score)>=75?'#1a7f37':Number(r.fused_score)>=60?'#9a6700':'#656d76'}">${Number(r.fused_score||0).toFixed(1)}</td>
+        <td><span class="badge ${String(r.signal||'').includes('看多')?'badge-bullish':String(r.signal||'').includes('分歧')?'badge-neutral':'badge-bearish'}">${esc(r.signal||'—')}</span></td>
+      </tr>`).join('');
+
+    const allBody = document.querySelector('#table-v7all tbody');
+    allBody.innerHTML = v6.slice(0,20).map((r,i)=>`
+      <tr>
+        <td style="text-align:center;color:#656d76">${i+1}</td>
+        <td style="font-family:monospace;color:#0969da;font-weight:600">${esc(r.ts_code)}</td>
+        <td>${esc(r.name||'')}</td>
+        <td style="text-align:center;font-weight:700;color:${Number(r.fused_score)>=75?'#1a7f37':Number(r.fused_score)>=60?'#9a6700':'#656d76'}">${Number(r.fused_score||0).toFixed(1)}</td>
+        <td style="text-align:center">${Number(r.vest_score||0).toFixed(1)}</td>
+        <td style="text-align:center">${Number(r.panda_score||0).toFixed(1)}</td>
+        <td><span class="badge ${String(r.signal||'').includes('看多')?'badge-bullish':String(r.signal||'').includes('分歧')?'badge-neutral':'badge-bearish'}">${esc(r.signal||'—')}</span></td>
+      </tr>`).join('');
+
+    // ── 趋势图（优先使用嵌入数据）──
+    let v6Dates = [], v6Avgs = [];
+    if (EMBEDDED_TREND && EMBEDDED_TREND.length) {
+      v6Dates = EMBEDDED_TREND.map(t => t.date.slice(5));
+      v6Avgs = EMBEDDED_TREND.map(t => t.avg);
+    } else {
+      // 回退：从 API 逐日拉取
+      const refDate = new Date(REPORT_DATE + 'T12:00:00');
+      for (let i=6; i>=0; i--) {
+        const d = new Date(refDate); d.setDate(d.getDate()-i);
+        const ds = d.toISOString().slice(0,10);
+        try {
+          const dayData = await rpc('agent_top_scores', {system_name:'v6', trade_date:ds, limit_n:30});
+          if (dayData.length) {
+            v6Dates.push(ds.slice(5));
+            v6Avgs.push(dayData.reduce((s,r)=>s+(r.fused_score||0),0)/dayData.length);
+          }
+        } catch(e) {
+          console.warn('V7 trend fetch failed for', ds, e);
+        }
+      }
+    }
+    if (v6Dates.length) {
+      chart('chart-v7-trend', 'line', v6Dates, [
+        {label:'V7 均分', data:v6Avgs, borderColor:'#0969da', backgroundColor:'rgba(9,105,218,0.1)', tension:0.3, fill:true, pointRadius:4}
+      ]);
+    }
+
+    // ── 评分分布（优先使用全市场嵌入数据）──
+    let distData = {};
+    if (EMBEDDED_DIST && Object.keys(EMBEDDED_DIST).length) {
+      distData = EMBEDDED_DIST;
+    } else {
+      const bins = {'≥90':0,'80-89':0,'70-79':0,'60-69':0,'50-59':0,'<50':0};
+      v6.forEach(r => {
+        const s = r.fused_score||0;
+        if (s>=90) bins['≥90']++;
+        else if (s>=80) bins['80-89']++;
+        else if (s>=70) bins['70-79']++;
+        else if (s>=60) bins['60-69']++;
+        else if (s>=50) bins['50-59']++;
+        else bins['<50']++;
+      });
+      distData = bins;
+    }
+    chart('chart-v7-dist', 'bar', Object.keys(distData), [
+      {label:'全市场分布', data:Object.values(distData), backgroundColor:'#0969da', borderRadius:4}
+    ]);
+    // 更新全市场总数（优先使用分布数据总和）
+    const totalStocks = Object.values(distData).reduce((a,b)=>a+b, 0);
+    if (totalStocks > 0) document.getElementById('v7-total').textContent = totalStocks;
+
+    document.getElementById('footer-time').textContent = new Date().toLocaleTimeString('zh-CN');
+
+  } catch(e) {
+    console.error('PostgREST:', e);
+    const errMsg = esc(e.message || String(e));
+    document.querySelector('#table-v7top tbody').innerHTML = '<tr><td colspan="5" class="error-msg">⚠️ PostgREST 不可用: '+errMsg+'</td></tr>';
+  }
+}
+
+async function loadNotes() {
+  try {
+    // 优先使用嵌入数据
+    if (EMBEDDED_NOTES > 0) {
+      document.getElementById('kpi-agent-notes').textContent = EMBEDDED_NOTES;
+      return;
+    }
+    // 回退：从 API 拉取
+    const notes = await rpc('agent_notes_query', {limit_n:12});
+    document.getElementById('kpi-agent-notes').textContent = notes.length;
+  } catch(e) {
+    console.warn('loadNotes failed:', e);
+  }
+}
+
+loadV7();
+loadNotes();
+setInterval(()=>{loadV7();loadNotes();}, 300000);
+</script>
+</body>
+</html>
